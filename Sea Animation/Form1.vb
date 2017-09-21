@@ -12,7 +12,7 @@ Public Class Form1
     Private clouds As Layer
 
 
-    Private resourcePath As New String("D:\Prog\Projects\VisualBasic\Sea Animation")
+    Private resourcePath As New String("D:\Prog\Resources\SeaAnimaion")
 
     Dim tick As Integer = 0
 
@@ -128,6 +128,8 @@ Public Class Form1
         If e.KeyCode = Keys.D9 Then sky.Transition(9)
         If e.KeyCode = Keys.Add Then sky.ySpeed += 20
         If e.KeyCode = Keys.Subtract Then sky.ySpeed -= 20
+        If e.KeyCode = Keys.Up Then sky.img1PosY -= 20
+        If e.KeyCode = Keys.Down Then sky.img1PosY += 20
     End Sub
 
 End Class
