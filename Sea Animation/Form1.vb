@@ -10,9 +10,9 @@ Public Class Form1
     Private seaBerg As Layer
     Private seaBerg2 As Layer
     Private clouds As Layer
+    Private rotor As Rotator
 
-
-    Private resourcePath As New String("D:\Prog\Resources\SeaAnimaion")
+    Private resourcePath As New String("D:")
 
     Dim tick As Integer = 0
 
@@ -32,6 +32,9 @@ Public Class Form1
         seaBerg.Update()
         seaBerg2.Update()
         clouds.Update()
+
+        rotor.Update()
+
         Me.Invalidate()
         tick += 1
     End Sub
@@ -56,6 +59,7 @@ Public Class Form1
         seaBerg2 = New Layer(1193, 588, 1, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaBerg.png"), 500)
         clouds = New Layer(1193, 588, 3, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\clouds.png"))
 
+        rotor = New Rotator(System.Drawing.Image.FromFile(resourcePath + "\Images\heliprop.png"), New Point(50, 100))
 
         splitLength = 5880 / splits
         currentTarget = 0
@@ -110,6 +114,7 @@ Public Class Form1
         seaWave3.Draw(e.Graphics)
         seaWave4.Draw(e.Graphics)
         seaBerg.Draw(e.Graphics)
+        rotor.Draw(e.Graphics)
         'DrawBezier(e.Graphics)
 
     End Sub
@@ -137,6 +142,53 @@ End Class
 Public MustInherit Class Animation
     Public MustOverride Sub Update()
     Public MustOverride Sub Draw(ByRef g As Graphics)
+End Class
+
+
+Public Class Rotator : Inherits Animation
+    Private image As Image
+    Private angle As Integer
+    Private speed As Integer
+    Private pos As Point
+
+    Public Sub New(ByRef img As Image, pos As Point)
+        Me.image = img
+        Me.pos = pos
+    End Sub
+    Public Overrides Sub Draw(ByRef g As Graphics)
+        'g.DrawImage(image, New Point(-image.Width / 2, -image.Height / 2))
+        g.TranslateTransform(pos.X, pos.Y)
+        g.RotateTransform(angle)
+        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 0, 20)
+        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 90, 20)
+        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 180, 20)
+        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 270, 20)
+        g.ResetTransform()
+    End Sub
+
+    Public Overrides Sub Update()
+        angle += 1
+    End Sub
+End Class
+
+Public Class ImageSwitcher : Inherits Animation
+    Private images As List(Of Image)
+    Private speed As Integer
+    Private fade As Boolean
+    Private currentImageIndex As Integer
+    Private pos As Point
+
+    Public Sub AddImage(ByRef img As Image)
+        images.Add(img)
+    End Sub
+
+    Public Overrides Sub Draw(ByRef g As Graphics)
+        g.DrawImage(images(currentImageIndex), pos)
+    End Sub
+
+    Public Overrides Sub Update()
+        currentImageIndex += 1
+    End Sub
 End Class
 
 Public Class Layer : Inherits Animation
