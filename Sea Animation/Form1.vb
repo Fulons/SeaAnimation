@@ -1,16 +1,17 @@
 ﻿
 
 Public Class Form1
-    Private sky As Layer
-    Private boat As Layer
-    Private seaWave1 As Layer
-    Private seaWave2 As Layer
-    Private seaWave3 As Layer
-    Private seaWave4 As Layer
-    Private seaBerg As Layer
-    Private seaBerg2 As Layer
-    Private clouds As Layer
-    Private rotor As Rotator
+    'Private sky As Layer
+    'Private boat As Layer
+    'Private seaWave1 As Layer
+    'Private seaWave2 As Layer
+    'Private seaWave3 As Layer
+    'Private seaWave4 As Layer
+    'Private seaBerg As Layer
+    'Private seaBerg2 As Layer
+    'Private clouds As Layer
+    'Private rotor As Rotator
+    'Private helicopter As Rotator
 
     Private resourcePath As New String("D:")
 
@@ -23,46 +24,47 @@ Public Class Form1
     Dim transitioning As Boolean = True
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        sky.Update()
-        boat.Update()
-        seaWave1.Update()
-        seaWave2.Update()
-        seaWave3.Update()
-        seaWave4.Update()
-        seaBerg.Update()
-        seaBerg2.Update()
-        clouds.Update()
-
-        rotor.Update()
+        'sky.Update()
+        'boat.Update()
+        'seaWave1.Update()
+        'seaWave2.Update()
+        'seaWave3.Update()
+        'seaWave4.Update()
+        'seaBerg.Update()
+        'seaBerg2.Update()
+        'clouds.Update()
+        '
+        'rotor.Update()
 
         Me.Invalidate()
         tick += 1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        sky = New Layer(1193, 5880, 0, 25, System.Drawing.Image.FromFile(resourcePath + "\Images\SkyLine.png"))
-        Dim animationLenght As Integer = 5880
-        Dim numTransitions = 6
-        Dim skyTransitions(numTransitions - 1) As Integer
-        Dim currentAnimationPos = 0
-        For i As Integer = 0 To numTransitions - 1
-            skyTransitions(i) = currentAnimationPos
-            currentAnimationPos -= animationLenght / numTransitions
-        Next
-        sky.AddTransitions(skyTransitions)
-        boat = New Layer(1193, 588, 0, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaShip.png"))
-        seaWave1 = New Layer(1193, 588, 1, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaWave1.png"))
-        seaWave2 = New Layer(1193, 588, 3, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaWave2.png"))
-        seaWave3 = New Layer(1193, 588, 6, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaWave3.png"))
-        seaWave4 = New Layer(1193, 588, 12, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaWave4.png"))
-        seaBerg = New Layer(1193, 588, 2, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaBerg.png"))
-        seaBerg2 = New Layer(1193, 588, 1, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaBerg.png"), 500)
-        clouds = New Layer(1193, 588, 3, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\clouds.png"))
-
-        rotor = New Rotator(System.Drawing.Image.FromFile(resourcePath + "\Images\heliprop.png"), New Point(50, 100))
-
-        splitLength = 5880 / splits
-        currentTarget = 0
+        'sky = New Layer(1193, 5880, 0, 25, System.Drawing.Image.FromFile(resourcePath + "\Images\CityScroll.png"))
+        'Dim animationLenght As Integer = 5880
+        'Dim numTransitions = 6
+        'Dim skyTransitions(numTransitions - 1) As Integer
+        'Dim currentAnimationPos = 0
+        'For i As Integer = 0 To numTransitions - 1
+        '    skyTransitions(i) = currentAnimationPos
+        '    currentAnimationPos -= animationLenght / numTransitions
+        'Next
+        'sky.AddTransitions(skyTransitions)
+        'boat = New Layer(1193, 588, 0, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaShip.png"))
+        'seaWave1 = New Layer(1193, 588, -10, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\CityScroll.png"))
+        'seaWave2 = New Layer(1193, 588, 3, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaWave2.png"))
+        'seaWave3 = New Layer(1193, 588, 6, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaWave3.png"))
+        'seaWave4 = New Layer(1193, 588, 12, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaWave4.png"))
+        'seaBerg = New Layer(1193, 588, 2, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaBerg.png"))
+        'seaBerg2 = New Layer(1193, 588, 1, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\seaBerg.png"), 500)
+        'clouds = New Layer(1193, 588, 3, 0, System.Drawing.Image.FromFile(resourcePath + "\Images\clouds.png"))
+        '
+        'helicopter = New Rotator(System.Drawing.Image.FromFile(resourcePath + "\Images\CityHeli.png"), New Point(500, 500))
+        'rotor = New Rotator(System.Drawing.Image.FromFile(resourcePath + "\Images\finalprop.png"), New Point(815, 415)) '315, -85
+        '
+        'splitLength = 5880 / splits
+        'currentTarget = 0
     End Sub
 
     Private Sub DrawBezier(ByRef g As System.Drawing.Graphics)
@@ -105,36 +107,45 @@ Public Class Form1
 
 
     Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
-        sky.Draw(e.Graphics)
-        clouds.Draw(e.Graphics)
-        seaBerg2.Draw(e.Graphics)
-        boat.Draw(e.Graphics)
-        seaWave1.Draw(e.Graphics)
-        seaWave2.Draw(e.Graphics)
-        seaWave3.Draw(e.Graphics)
-        seaWave4.Draw(e.Graphics)
-        seaBerg.Draw(e.Graphics)
-        rotor.Draw(e.Graphics)
+        'sky.Draw(e.Graphics)
+        'clouds.Draw(e.Graphics)
+        'seaBerg2.Draw(e.Graphics)
+        'boat.Draw(e.Graphics)
+        'seaWave1.Draw(e.Graphics)
+        'seaWave2.Draw(e.Graphics)
+        'seaWave3.Draw(e.Graphics)
+        'seaWave4.Draw(e.Graphics)
+        'seaBerg.Draw(e.Graphics)
+        'helicopter.Draw(e.Graphics)
+        'rotor.Draw(e.Graphics)
         'DrawBezier(e.Graphics)
 
     End Sub
 
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If e.KeyCode = Keys.Enter Then sky.TransitionNext()
-        If e.KeyCode = Keys.D0 Then sky.Transition(0)
-        If e.KeyCode = Keys.D1 Then sky.Transition(1)
-        If e.KeyCode = Keys.D2 Then sky.Transition(2)
-        If e.KeyCode = Keys.D3 Then sky.Transition(3)
-        If e.KeyCode = Keys.D4 Then sky.Transition(4)
-        If e.KeyCode = Keys.D5 Then sky.Transition(5)
-        If e.KeyCode = Keys.D6 Then sky.Transition(6)
-        If e.KeyCode = Keys.D7 Then sky.Transition(7)
-        If e.KeyCode = Keys.D8 Then sky.Transition(8)
-        If e.KeyCode = Keys.D9 Then sky.Transition(9)
-        If e.KeyCode = Keys.Add Then sky.ySpeed += 20
-        If e.KeyCode = Keys.Subtract Then sky.ySpeed -= 20
-        If e.KeyCode = Keys.Up Then sky.img1PosY -= 20
-        If e.KeyCode = Keys.Down Then sky.img1PosY += 20
+        'If e.KeyCode = Keys.Enter Then sky.TransitionNext()
+        'If e.KeyCode = Keys.D0 Then sky.Transition(0)
+        'If e.KeyCode = Keys.D1 Then sky.Transition(1)
+        'If e.KeyCode = Keys.D2 Then sky.Transition(2)
+        'If e.KeyCode = Keys.D3 Then sky.Transition(3)
+        'If e.KeyCode = Keys.D4 Then sky.Transition(4)
+        'If e.KeyCode = Keys.D5 Then sky.Transition(5)
+        'If e.KeyCode = Keys.D6 Then sky.Transition(6)
+        'If e.KeyCode = Keys.D7 Then sky.Transition(7)
+        'If e.KeyCode = Keys.D8 Then sky.Transition(8)
+        'If e.KeyCode = Keys.D9 Then sky.Transition(9)
+        'If e.KeyCode = Keys.Add Then sky.ySpeed += 20
+        'If e.KeyCode = Keys.Subtract Then sky.ySpeed -= 20
+        '
+        'If e.KeyCode = Keys.Right Then rotor.pos.X += 1
+        'If e.KeyCode = Keys.Left Then rotor.pos.X -= 1
+        'If e.KeyCode = Keys.Up Then rotor.pos.Y -= 1
+        'If e.KeyCode = Keys.Down Then rotor.pos.Y += 1
+        '
+        'If e.KeyCode = Keys.W Then rotor.speed += 1
+        'If e.KeyCode = Keys.S Then rotor.speed -= 1
+
+
     End Sub
 
 End Class
@@ -148,26 +159,29 @@ End Class
 Public Class Rotator : Inherits Animation
     Private image As Image
     Private angle As Integer
-    Private speed As Integer
-    Private pos As Point
+    Public speed As Integer
+    Public pos As Point
 
     Public Sub New(ByRef img As Image, pos As Point)
         Me.image = img
         Me.pos = pos
+        Me.speed = 1
     End Sub
     Public Overrides Sub Draw(ByRef g As Graphics)
         'g.DrawImage(image, New Point(-image.Width / 2, -image.Height / 2))
         g.TranslateTransform(pos.X, pos.Y)
         g.RotateTransform(angle)
-        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 0, 20)
-        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 90, 20)
-        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 180, 20)
-        g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 270, 20)
+        g.DrawImage(image, New Rectangle(-image.Width / 2, -image.Height / 2, image.Width, image.Height))
+        'g.DrawEllipse(Pens.Black, New Rectangle(-image.Width / 2, -image.Height / 2, image.Width, image.Height))
+        'g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 0, 20)
+        'g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 90, 20)
+        'g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 180, 20)
+        'g.FillPie(Brushes.Black, New Rectangle(New Point(-50, -50), New Size(100, 100)), 270, 20)
         g.ResetTransform()
     End Sub
 
     Public Overrides Sub Update()
-        angle += 1
+        angle += speed
     End Sub
 End Class
 
@@ -191,6 +205,81 @@ Public Class ImageSwitcher : Inherits Animation
     End Sub
 End Class
 
+Public Class TranslationAnimation : Inherits Animation
+#Region "New stuff"
+    Private image As Image
+    Private pos As Vec2
+    Private targets() As Vec2
+    Private speed As Double
+    Private currentTarget As Integer = 0
+    Private repeatX As Boolean = False
+    Private repeatY As Boolean = False
+
+    Private targetReached As Boolean
+#End Region
+
+    Public Sub New(ByRef image As Image)
+        Me.image = image
+    End Sub
+
+    Public Sub New(ByRef image As Image, pos As Vec2)
+        Me.image = image
+        Me.pos = pos
+    End Sub
+
+    Public Overrides Sub Draw(ByRef g As Graphics)
+        If repeatX AndAlso repeatY Then
+            If pos.x > 0 Then
+                g.DrawImage(image, New Point(pos.x - image.Width, pos.y))
+                'draw other x image at pos.x - image.width
+                If pos.y > 0 Then
+                    g.DrawImage(image, New Point(pos.x - image.Width, pos.y - image.Height))
+                    'draw diag image at pos.x - image.width, pos.y - image.height
+                Else
+                    'draw diag image at pos.x - image.width, pos.y + image.height
+                    g.DrawImage(image, New Point(pos.x - image.Width, pos.y + image.Height))
+                End If
+            Else
+                g.DrawImage(image, New Point(pos.x + image.Width, pos.y))
+                If pos.y > 0 Then
+                    g.DrawImage(image, New Point(pos.x + image.Width, pos.y - image.Height))
+                    'draw diag image at pos.x + image.width, pos.y - image.height
+                Else
+                    g.DrawImage(image, New Point(pos.x + image.Width, pos.y + image.Height))
+                    'draw diag image at pos.x + image.width, pos.y + image.height
+                End If
+            End If
+        ElseIf repeatX Then
+            If pos.x > 0 Then
+                g.DrawImage(image, New Point(pos.x - image.Width, pos.y))
+            Else
+                g.DrawImage(image, New Point(pos.x + image.Width, pos.y))
+            End If
+        ElseIf repeatY Then
+            If pos.y > 0 Then
+                g.DrawImage(image, New Point(pos.x, pos.y - image.Height))
+            Else
+                g.DrawImage(image, New Point(pos.x, pos.y + image.Height))
+            End If
+        End If
+    End Sub
+
+    Public Overrides Sub Update()
+        If targetReached Then Return
+        Dim posWas As Vec2 = pos
+        Dim target As Vec2 = targets(currentTarget)
+        pos += Vec2.Normalize(target - pos) * speed
+
+        Dim dot As Double = Vec2.Dot(pos, target)
+        Dim dotWas As Double = Vec2.Dot(posWas, target)
+
+        If (dot < 0 AndAlso dotWas > 0) Or
+            (dot > 0 AndAlso dotWas < 0) Then
+            targetReached = True
+        End If
+    End Sub
+End Class
+
 Public Class Layer : Inherits Animation
     Private img1PosX As Integer
     Private img2PosX As Integer
@@ -207,6 +296,9 @@ Public Class Layer : Inherits Animation
     Private transitions() As Integer
     Private currentTransitionTarget As Integer = 0
     Private transitioning As Boolean = False
+
+
+
 
     Public Sub AddTransitions(transitions() As Integer)
         Me.transitions = transitions
@@ -243,7 +335,7 @@ Public Class Layer : Inherits Animation
         Me.img1PosY = 0
         If ySpeed = 0 Then
             Me.img2PosY = 0
-        Else Me.img2PosY = sizeY
+        Else : Me.img2PosY = sizeY
         End If
 
 
@@ -253,73 +345,123 @@ Public Class Layer : Inherits Animation
         Me.xSpeed = xSpeed
         Me.ySpeed = ySpeed
         Me.image = image
+
+
     End Sub
 
+
+
+
     Public Overrides Sub Update()
-        If transitions IsNot Nothing Then
-            If Not transitioning Then
-                Return
-            End If
-        End If
-
-        If img1PosX <= -sizeX Then
-            img1PosX = img2PosX + sizeX
-        End If
-        If img2PosX <= -sizeX Then
-            img2PosX = img1PosX + sizeX
-        End If
-
-        If img1PosY <= -sizeY Then
-            img1PosY = img2PosY + sizeY
-        End If
-        If img2PosY <= -sizeY Then
-            img2PosY = img1PosY + sizeY
-        End If
-        If max < img1PosY Then max = img1PosY
-        If min > img1PosY Then min = img1PosY
-
-        Dim img1PosXwas As Integer = img1PosX
-        Dim img2PosXwas As Integer = img2PosX
-        Dim img1PosYwas As Integer = img1PosY
-        Dim img2PosYwas As Integer = img2PosY
-
-        img1PosX -= xSpeed
-        img2PosX -= xSpeed
-
-        img1PosY -= ySpeed
-        img2PosY -= ySpeed
-
-        If transitions IsNot Nothing Then
-            If transitioning Then
-                If img1PosY < 0 Then
-                    If (img1PosYwas >= transitions(currentTransitionTarget) AndAlso img1PosY < transitions(currentTransitionTarget)) Or
-                        (img1PosYwas <= transitions(currentTransitionTarget) AndAlso img1PosY > transitions(currentTransitionTarget)) Then
-                        transitioning = False
-                    End If
-                    If img2PosYwas > 0 AndAlso img2PosY < 0 Then
-                        If (img2PosYwas >= transitions(currentTransitionTarget) AndAlso img2PosY < transitions(currentTransitionTarget)) Or
-                           (img2PosYwas <= transitions(currentTransitionTarget) AndAlso img2PosY > transitions(currentTransitionTarget)) Then
-                            transitioning = False
-                        End If
-                    End If
-                Else
-                    If (img2PosYwas >= transitions(currentTransitionTarget) AndAlso img2PosY < transitions(currentTransitionTarget)) Or
-                   (img2PosYwas <= transitions(currentTransitionTarget) AndAlso img2PosY > transitions(currentTransitionTarget)) Then
-                        transitioning = False
-                    End If
-                    If img1PosYwas > 0 AndAlso img1PosY < 0 Then
-                        If (img1PosYwas >= transitions(currentTransitionTarget) AndAlso img1PosY < transitions(currentTransitionTarget)) Or
-                           (img1PosYwas <= transitions(currentTransitionTarget) AndAlso img1PosY > transitions(currentTransitionTarget)) Then
-                            transitioning = False
-                        End If
-                    End If
-                End If
-            End If
-        End If
+        'If transitions IsNot Nothing Then
+        '    If Not transitioning Then
+        '        Return
+        '    End If
+        'End If
+        '
+        'If img1PosX <= -image.Width Then
+        '    'img1PosX = img2PosX + image.Width
+        '    If img1PosX > 0 Then
+        '        img2PosX = img1PosX + image.Width
+        '    Else
+        '        img2PosX = img1PosX - image.Width
+        '    End If
+        'End If
+        '
+        ''If img2PosX <= -sizeX Then
+        ''    img2PosX = img1PosX + sizeX
+        ''End If
+        '
+        'If img1PosY <= -sizeY Then
+        '    img1PosY = img2PosY + sizeY
+        'End If
+        'If img2PosY <= -sizeY Then
+        '    img2PosY = img1PosY + sizeY
+        'End If
+        '
+        'If max < img1PosY Then max = img1PosY
+        'If min > img1PosY Then min = img1PosY
+        '
+        'Dim img1PosXwas As Integer = img1PosX
+        'Dim img2PosXwas As Integer = img2PosX
+        'Dim img1PosYwas As Integer = img1PosY
+        'Dim img2PosYwas As Integer = img2PosY
+        '
+        'img1PosX -= xSpeed
+        'img2PosX -= xSpeed
+        '
+        'img1PosY -= ySpeed
+        'img2PosY -= ySpeed
+        '
+        'If transitions IsNot Nothing Then
+        '    If transitioning Then
+        '        If img1PosY < 0 Then
+        '            If (img1PosYwas >= transitions(currentTransitionTarget) AndAlso img1PosY < transitions(currentTransitionTarget)) Or
+        '                (img1PosYwas <= transitions(currentTransitionTarget) AndAlso img1PosY > transitions(currentTransitionTarget)) Then
+        '                transitioning = False
+        '            End If
+        '            If img2PosYwas > 0 AndAlso img2PosY < 0 Then
+        '                If (img2PosYwas >= transitions(currentTransitionTarget) AndAlso img2PosY < transitions(currentTransitionTarget)) Or
+        '                   (img2PosYwas <= transitions(currentTransitionTarget) AndAlso img2PosY > transitions(currentTransitionTarget)) Then
+        '                    transitioning = False
+        '                End If
+        '            End If
+        '        Else
+        '            If (img2PosYwas >= transitions(currentTransitionTarget) AndAlso img2PosY < transitions(currentTransitionTarget)) Or
+        '           (img2PosYwas <= transitions(currentTransitionTarget) AndAlso img2PosY > transitions(currentTransitionTarget)) Then
+        '                transitioning = False
+        '            End If
+        '            If img1PosYwas > 0 AndAlso img1PosY < 0 Then
+        '                If (img1PosYwas >= transitions(currentTransitionTarget) AndAlso img1PosY < transitions(currentTransitionTarget)) Or
+        '                   (img1PosYwas <= transitions(currentTransitionTarget) AndAlso img1PosY > transitions(currentTransitionTarget)) Then
+        '                    transitioning = False
+        '                End If
+        '            End If
+        '        End If
+        '    End If
+        'End If
     End Sub
 
     Public Overrides Sub Draw(ByRef g As Graphics)
         g.DrawImage(image, img1PosX, img1PosY, image.Width, image.Height)
         g.DrawImage(image, img2PosX, img2PosY, image.Width, image.Height)
+
+        'Draw code
+
+        'If repeatX AndAlso repeatY Then
+        '    If pos.x > 0 Then
+        '        g.DrawImage(image, New Point(pos.x - image.Width, pos.y))
+        '        'draw other x image at pos.x - image.width
+        '        If pos.y > 0 Then
+        '            g.DrawImage(image, New Point(pos.x - image.Width, pos.y - image.Height))
+        '            'draw diag image at pos.x - image.width, pos.y - image.height
+        '        Else
+        '            'draw diag image at pos.x - image.width, pos.y + image.height
+        '            g.DrawImage(image, New Point(pos.x - image.Width, pos.y + image.Height))
+        '        End If
+        '    Else
+        '        g.DrawImage(image, New Point(pos.x + image.Width, pos.y))
+        '        If pos.y > 0 Then
+        '            g.DrawImage(image, New Point(pos.x + image.Width, pos.y - image.Height))
+        '            'draw diag image at pos.x + image.width, pos.y - image.height
+        '        Else
+        '            g.DrawImage(image, New Point(pos.x + image.Width, pos.y + image.Height))
+        '            'draw diag image at pos.x + image.width, pos.y + image.height
+        '        End If
+        '    End If
+        'ElseIf repeatX Then
+        '    If pos.x > 0 Then
+        '        g.DrawImage(image, New Point(pos.x - image.Width, pos.y))
+        '    Else
+        '        g.DrawImage(image, New Point(pos.x + image.Width, pos.y))
+        '    End If
+        'ElseIf repeatY Then
+        '    If pos.y > 0 Then
+        '        g.DrawImage(image, New Point(pos.x, pos.y - image.Height))
+        '    Else
+        '        g.DrawImage(image, New Point(pos.x, pos.y + image.Height))
+        '    End If
+        'End If
+
     End Sub
 End Class
