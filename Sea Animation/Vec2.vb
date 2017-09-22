@@ -38,6 +38,7 @@
 
     Public Shared Function Normalize(ByVal v1) As Vec2
         Dim l As Double = Length(v1)
+        If l = 0 Then Return New Vec2(0, 0)
         Return New Vec2(v1.x / l, v1.y / l)
     End Function
 
@@ -45,9 +46,14 @@
         Return New Point(v1.x, v1.y)
     End Function
 
+    Public Function AsPoint() As Point
+        Return New Point(Me.x, Me.y)
+    End Function
 
     Public Shared Function Dot(ByVal v1, ByVal v2) As Double
         Return v1.x * v2.x + v1.y * v2.y
     End Function
+
+
 
 End Class
