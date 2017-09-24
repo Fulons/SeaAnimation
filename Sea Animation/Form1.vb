@@ -26,8 +26,60 @@ Public Class Form1
         tick += 1
     End Sub
 
-
     Public gameObjects As New List(Of GameObject)
+
+    Public selectedGameObject As GameObject
+    Public selectedRenderable As Renderable
+    Public selectedAnimation As Animation
+
+    Public Sub SelectGameObjectRecursive(name As String, ByRef go As GameObject)
+        If name = go.name Then
+            selectedGameObject = go
+        Else
+            For Each child As GameObject In go.children
+                SelectGameObjectRecursive(name, child)
+            Next
+        End If
+    End Sub
+
+    Public Sub SelectGameObject(name As String)
+        selectedGameObject = Nothing
+        selectedRenderable = Nothing
+        selectedAnimation = Nothing
+        For Each go As GameObject In gameObjects
+            SelectGameObjectRecursive(name, go)
+        Next
+    End Sub
+
+    Public Sub SelectRenderable(id As Guid)
+        selectedRenderable = Nothing
+        selectedAnimation = Nothing
+        SelectRenderableRecursive(id, selectedGameObject.renderable)
+    End Sub
+
+    Private Sub SelectRenderableRecursive(id As Guid, ByRef r As Renderable)
+        If r.id = id Then
+            selectedRenderable = r
+            Return
+        End If
+        For Each child As Renderable In r.children
+            SelectRenderableRecursive(id, child)
+        Next
+    End Sub
+
+    Public Sub SelectAnimation(id As Guid)
+        selectedAnimation = Nothing
+        SelectAnimationRecursively(id, selectedRenderable.animation)
+    End Sub
+
+    Private Sub SelectAnimationRecursively(id As Guid, ByRef a As Animation)
+        If a.id = id Then
+            selectedAnimation = a
+        End If
+        For Each child As Animation In a.children
+            SelectAnimationRecursively(id, child)
+        Next
+    End Sub
 
     Private Sub CreateHelicopter()
         Dim ro As New ImageRenderObject(Image.FromFile("G:\Images\Helli Anim\helli_1.png"))
@@ -54,12 +106,11 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        CreateHelicopter()
+        'CreateHelicopter()
         sw.Start()
 
-
-
         ticksLastFrame = sw.ElapsedTicks
+        'Editor.Show()
     End Sub
 
     Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
@@ -70,6 +121,7 @@ Public Class Form1
         For g As Integer = 0 To gameObjects.Count() - 1
             gameObjects(g).Draw(e.Graphics)
         Next
+        'Editor.Activate()
     End Sub
     Private pos As New Vec2
 
@@ -122,6 +174,7 @@ Public Class Form1
     Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
         If e.KeyChar = "E" Or e.KeyChar = "e" Then Editor.Show()
     End Sub
+
 End Class
 
 
