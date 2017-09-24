@@ -32,6 +32,8 @@ Partial Class Editor
         '
         'tvGameObjects
         '
+        Me.tvGameObjects.AllowDrop = True
+        Me.tvGameObjects.HideSelection = False
         Me.tvGameObjects.Location = New System.Drawing.Point(12, 12)
         Me.tvGameObjects.Name = "tvGameObjects"
         Me.tvGameObjects.Size = New System.Drawing.Size(145, 562)

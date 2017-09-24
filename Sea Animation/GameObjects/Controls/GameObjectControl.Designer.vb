@@ -64,6 +64,7 @@ Partial Class GameObjectControl
         '
         'tvRenderables
         '
+        Me.tvRenderables.AllowDrop = True
         Me.tvRenderables.ImageIndex = 0
         Me.tvRenderables.ImageList = Me.ilRenderableIcons
         Me.tvRenderables.Location = New System.Drawing.Point(3, 54)

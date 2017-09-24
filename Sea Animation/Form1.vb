@@ -72,6 +72,77 @@ Public Class Form1
         SelectAnimationRecursively(id, selectedRenderable.animation)
     End Sub
 
+    Private Function GetGameObjectRecursively(name As String, ByRef go As List(Of GameObject), ByRef parent As GameObject, Optional remove As Boolean = False) As GameObject
+        For i As Integer = 0 To go.Count() - 1
+            If go(i).name = name Then
+                If remove = True Then
+                    If parent IsNot Nothing Then
+                        Dim ret As GameObject = go(i)
+                        parent.children.RemoveAt(i)
+                        Return ret
+                    Else
+                        Dim ret As GameObject = go(i)
+                        Me.gameObjects.RemoveAt(i)
+                        Return ret
+                    End If
+                    Return go(i)
+                End If
+            Else
+                Dim g As GameObject = GetGameObjectRecursively(name, go(i).children, go(i), remove)
+                If g IsNot Nothing Then Return g
+            End If
+        Next
+        Return Nothing
+    End Function
+
+    Public Function GetGameObject(name As String) As GameObject
+        Return GetGameObjectRecursively(name, gameObjects, Nothing)
+    End Function
+
+    Public Function GetAndRemoveGameObject(name As String) As GameObject
+        Return GetGameObjectRecursively(name, gameObjects, Nothing, True)
+    End Function
+
+    Private Function GetRenderableRecursively(id As Guid, r As Renderable, parent As Renderable, Optional remove As Boolean = False) As Renderable
+        If r.id = id Then
+            If remove Then parent.children.Remove(r)
+            Return r
+        End If
+        For Each child In r.children
+            Dim ret As Renderable = GetRenderableRecursively(id, child, r, remove)
+            If ret IsNot Nothing Then Return ret
+        Next
+        Return Nothing
+    End Function
+
+    Public Function GetRenderable(id As Guid) As Renderable
+        Return GetRenderableRecursively(id, selectedGameObject.renderable, Nothing)
+    End Function
+
+    Public Function GetAndRemoveRenderable(id As Guid) As Renderable
+        Return GetRenderableRecursively(id, selectedGameObject.renderable, Nothing, True)
+    End Function
+
+    Private Function GetAnimationRecursively(id As Guid, a As Animation, parent As Animation, Optional remove As Boolean = False) As Animation
+        If a.id = id Then
+            If remove Then parent.children.Remove(a)
+            Return a
+        End If
+        For Each child In a.children
+            Dim ret As Animation = GetAnimationRecursively(id, child, a, remove)
+            If ret IsNot Nothing Then Return ret
+        Next
+        Return Nothing
+    End Function
+
+    Public Function GetAnimation(id As Guid) As Animation
+        Return GetAnimationRecursively(id, selectedRenderable.animation, Nothing)
+    End Function
+
+    Public Function GetAndRemoveAnimation(id As Guid) As Animation
+        Return GetAnimationRecursively(id, selectedRenderable.animation, Nothing, True)
+    End Function
+
     Private Sub SelectAnimationRecursively(id As Guid, ByRef a As Animation)
         If a.id = id Then
             selectedAnimation = a

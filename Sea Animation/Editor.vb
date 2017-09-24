@@ -98,4 +98,61 @@ Public Class Editor
             AddGameObject()
         End If
     End Sub
+
+    Private Sub tvGameObjects_ItemDrag(sender As Object, e As ItemDragEventArgs) Handles tvGameObjects.ItemDrag
+        DoDragDrop(e.Item, DragDropEffects.Move)
+    End Sub
+
+    Private Sub tvGameObjects_DragEnter(sender As Object, e As DragEventArgs) Handles tvGameObjects.DragEnter
+        If e.Data.GetDataPresent("System.Windows.Forms.TreeNode", True) Then
+            e.Effect = DragDropEffects.Move
+        Else
+            e.Effect = DragDropEffects.None
+        End If
+    End Sub
+
+    Private Sub tvGameObjects_DragOver(sender As Object, e As DragEventArgs) Handles tvGameObjects.DragOver
+        If e.Data.GetDataPresent("System.Windows.Forms.TreeNode", True) = False Then Exit Sub
+        Dim selectedTreeView As TreeView = CType(sender, TreeView)
+
+        Dim pt As Point = selectedTreeView.PointToClient(New Point(e.X, e.Y))
+        Dim targetNode As TreeNode = selectedTreeView.GetNodeAt(pt)
+
+        If Not (selectedTreeView.SelectedNode Is targetNode) Then
+            selectedTreeView.SelectedNode = targetNode
+
+            Dim dropNode As TreeNode = CType(e.Data.GetData("System.Windows.Forms.TreeNode"), TreeNode)
+
+            Do Until targetNode Is Nothing
+                If targetNode Is dropNode Then
+                    e.Effect = DragDropEffects.None
+                    Exit Sub
+                End If
+                targetNode = targetNode.Parent
+            Loop
+        End If
+        e.Effect = DragDropEffects.Move
+    End Sub
+
+    Private Sub tvGameObjects_DragDrop(sender As Object, e As DragEventArgs) Handles tvGameObjects.DragDrop
+        If e.Data.GetDataPresent("System.Windows.Forms.TreeNode", True) = False Then Exit Sub
+
+        Dim selectedTreeView As TreeView = CType(sender, TreeView)
+
+        Dim dropNode As TreeNode = CType(e.Data.GetData("System.Windows.Forms.TreeNode"), TreeNode)
+        Dim targetNode As TreeNode = selectedTreeView.SelectedNode
+        dropNode.Remove()
+        Dim go As GameObject = Form1.GetAndRemoveGameObject(dropNode.Name)
+
+        If targetNode Is Nothing Then
+            selectedTreeView.Nodes.Add(dropNode)
+            Form1.gameObjects.Add(go)
+        Else
+            targetNode.Nodes.Add(dropNode)
+            Form1.selectedGameObject.children.Add(go)
+        End If
+
+        dropNode.EnsureVisible()
+        selectedTreeView.SelectedNode = dropNode
+    End Sub
 End Class

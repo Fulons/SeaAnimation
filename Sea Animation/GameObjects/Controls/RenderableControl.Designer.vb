@@ -54,6 +54,7 @@ Partial Class RenderableControl
         '
         'tvAnimations
         '
+        Me.tvAnimations.AllowDrop = True
         Me.tvAnimations.Location = New System.Drawing.Point(201, 3)
         Me.tvAnimations.Name = "tvAnimations"
         Me.tvAnimations.Size = New System.Drawing.Size(151, 213)
