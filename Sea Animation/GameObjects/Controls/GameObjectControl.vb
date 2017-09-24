@@ -97,7 +97,8 @@ Public Class GameObjectControl
         Editor.GameObjectControl1.SetValues(Form1.selectedGameObject)
     End Sub
 
-    Private Sub btnDeleteRenderable_Click(sender As Object, e As EventArgs) Handles btnDeleteRenderable.Click
+    Private Sub DeleteSelectedRenderable()
+        If tvRenderables.SelectedNode Is Nothing Then Return
         Dim r As Renderable = Form1.selectedRenderable
         Form1.selectedRenderable = Nothing
         If tvRenderables.SelectedNode.Parent Is Nothing Then
@@ -115,6 +116,16 @@ Public Class GameObjectControl
                     Return
                 End If
             Next
+        End If
+    End Sub
+
+    Private Sub btnDeleteRenderable_Click(sender As Object, e As EventArgs) Handles btnDeleteRenderable.Click
+        DeleteSelectedRenderable()
+    End Sub
+
+    Private Sub tvRenderables_KeyDown(sender As Object, e As KeyEventArgs) Handles tvRenderables.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            DeleteSelectedRenderable()
         End If
     End Sub
 

@@ -108,6 +108,7 @@ Partial Class GameObjectControl
         '
         'cbRenderableType
         '
+        Me.cbRenderableType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbRenderableType.FormattingEnabled = True
         Me.cbRenderableType.Items.AddRange(New Object() {"ImageRenderObject"})
         Me.cbRenderableType.Location = New System.Drawing.Point(3, 414)

@@ -81,7 +81,8 @@
         Editor.GameObjectControl1.RenderableControl1.SetValues(Form1.selectedRenderable)
     End Sub
 
-    Private Sub btnRemoveAnimation_Click(sender As Object, e As EventArgs) Handles btnDeleteAnimation.Click
+    Private Sub DeleteSelectedAnimation()
+        If tvAnimations.SelectedNode Is Nothing Then Return
         Dim a As Animation = Form1.selectedAnimation
         Form1.selectedAnimation = Nothing
         If tvAnimations.SelectedNode.Parent Is Nothing Then
@@ -102,7 +103,17 @@
         Me.SetValues(Form1.selectedRenderable)
     End Sub
 
+    Private Sub btnRemoveAnimation_Click(sender As Object, e As EventArgs) Handles btnDeleteAnimation.Click
+        DeleteSelectedAnimation()
+    End Sub
+
     Private Sub cbCentered_CheckedChanged(sender As Object, e As EventArgs) Handles cbCentered.CheckedChanged
         Form1.selectedRenderable.what.centered = cbCentered.Checked
+    End Sub
+
+    Private Sub tvAnimations_KeyDown(sender As Object, e As KeyEventArgs) Handles tvAnimations.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            DeleteSelectedAnimation()
+        End If
     End Sub
 End Class

@@ -27,13 +27,14 @@ Partial Class Editor
         Me.btnAddGameObject = New System.Windows.Forms.Button()
         Me.btnDeleteGameObject = New System.Windows.Forms.Button()
         Me.txtName = New System.Windows.Forms.TextBox()
+        Me.cbRoot = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'tvGameObjects
         '
         Me.tvGameObjects.Location = New System.Drawing.Point(12, 12)
         Me.tvGameObjects.Name = "tvGameObjects"
-        Me.tvGameObjects.Size = New System.Drawing.Size(145, 585)
+        Me.tvGameObjects.Size = New System.Drawing.Size(145, 562)
         Me.tvGameObjects.TabIndex = 3
         '
         'GameObjectControl1
@@ -71,12 +72,23 @@ Partial Class Editor
         Me.txtName.Size = New System.Drawing.Size(144, 20)
         Me.txtName.TabIndex = 7
         '
+        'cbRoot
+        '
+        Me.cbRoot.AutoSize = True
+        Me.cbRoot.Location = New System.Drawing.Point(12, 580)
+        Me.cbRoot.Name = "cbRoot"
+        Me.cbRoot.Size = New System.Drawing.Size(74, 17)
+        Me.cbRoot.TabIndex = 8
+        Me.cbRoot.Text = "Make root"
+        Me.cbRoot.UseVisualStyleBackColor = True
+        '
         'Editor
         '
         Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(983, 659)
+        Me.Controls.Add(Me.cbRoot)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.btnDeleteGameObject)
         Me.Controls.Add(Me.btnAddGameObject)
@@ -94,4 +106,5 @@ Partial Class Editor
     Friend WithEvents btnAddGameObject As Button
     Friend WithEvents btnDeleteGameObject As Button
     Friend WithEvents txtName As TextBox
+    Friend WithEvents cbRoot As CheckBox
 End Class

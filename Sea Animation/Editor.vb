@@ -48,8 +48,8 @@ Public Class Editor
         End If
     End Sub
 
-    Private Sub btnAddGameObject_Click(sender As Object, e As EventArgs) Handles btnAddGameObject.Click
-        If Form1.selectedGameObject Is Nothing Then
+    Private Sub AddGameObject()
+        If Form1.selectedGameObject Is Nothing Or cbRoot.Checked = True Then
             Form1.gameObjects.Add(New GameObject(txtName.Text))
         Else
             Form1.selectedGameObject.children.Add(New GameObject(txtName.Text))
@@ -57,28 +57,12 @@ Public Class Editor
         CreateGameObjectTree()
     End Sub
 
-    'Private Sub btnDeleteRenderable_Click(sender As Object, e As EventArgs) Handles btnDeleteRenderable.Click
-    '    Dim r As Renderable = Form1.selectedRenderable
-    '    Form1.selectedRenderable = Nothing
-    '    If tvRenderables.SelectedNode.Parent Is Nothing Then
-    '        Form1.selectedGameObject.renderable = Nothing
-    '        SetValues(Form1.selectedGameObject)
-    '    Else
-    '        Form1.SelectRenderable(Guid.Parse(tvRenderables.SelectedNode.Parent.Name))
-    '        For i As Integer = 0 To Form1.selectedRenderable.children.Count - 1
-    '            If Form1.selectedRenderable.children(i).id = r.id Then
-    '                Form1.selectedRenderable.children.RemoveAt(i)
-    '                Dim t As TreeNode = tvRenderables.SelectedNode.Parent
-    '                tvRenderables.Nodes.Remove(tvRenderables.SelectedNode)
-    '                tvRenderables.SelectedNode = t
-    '                SetValues(Form1.selectedGameObject)
-    '                Return
-    '            End If
-    '        Next
-    '    End If
-    'End Sub
+    Private Sub btnAddGameObject_Click(sender As Object, e As EventArgs) Handles btnAddGameObject.Click
+        AddGameObject()
+    End Sub
 
-    Private Sub btnDeleteGameObject_Click(sender As Object, e As EventArgs) Handles btnDeleteGameObject.Click
+    Private Sub DeleteSelectedObject()
+        If tvGameObjects.SelectedNode Is Nothing Then Return
         Dim go As GameObject = Form1.selectedGameObject
         Form1.selectedGameObject = Nothing
         If tvGameObjects.SelectedNode.Parent Is Nothing Then
@@ -96,6 +80,22 @@ Public Class Editor
                     Return
                 End If
             Next
+        End If
+    End Sub
+
+    Private Sub btnDeleteGameObject_Click(sender As Object, e As EventArgs) Handles btnDeleteGameObject.Click
+        DeleteSelectedObject()
+    End Sub
+
+    Private Sub tvGameObjects_KeyDown(sender As Object, e As KeyEventArgs) Handles tvGameObjects.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            DeleteSelectedObject()
+        End If
+    End Sub
+
+    Private Sub txtName_KeyDown(sender As Object, e As KeyEventArgs) Handles txtName.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            AddGameObject()
         End If
     End Sub
 End Class

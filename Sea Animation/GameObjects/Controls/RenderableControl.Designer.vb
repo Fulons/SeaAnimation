@@ -98,6 +98,7 @@ Partial Class RenderableControl
         '
         'cbAnimationType
         '
+        Me.cbAnimationType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbAnimationType.FormattingEnabled = True
         Me.cbAnimationType.Items.AddRange(New Object() {"RotatorAnimation"})
         Me.cbAnimationType.Location = New System.Drawing.Point(201, 251)
