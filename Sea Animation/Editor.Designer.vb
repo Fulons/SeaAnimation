@@ -28,6 +28,8 @@ Partial Class Editor
         Me.btnDeleteGameObject = New System.Windows.Forms.Button()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.cbRoot = New System.Windows.Forms.CheckBox()
+        Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tvGameObjects
@@ -84,12 +86,22 @@ Partial Class Editor
         Me.cbRoot.Text = "Make root"
         Me.cbRoot.UseVisualStyleBackColor = True
         '
+        'NumericUpDown1
+        '
+        Me.NumericUpDown1.Location = New System.Drawing.Point(692, 633)
+        Me.NumericUpDown1.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NumericUpDown1.Name = "NumericUpDown1"
+        Me.NumericUpDown1.Size = New System.Drawing.Size(120, 20)
+        Me.NumericUpDown1.TabIndex = 9
+        Me.NumericUpDown1.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
         'Editor
         '
         Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(983, 659)
+        Me.Controls.Add(Me.NumericUpDown1)
         Me.Controls.Add(Me.cbRoot)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.btnDeleteGameObject)
@@ -99,6 +111,7 @@ Partial Class Editor
         Me.DoubleBuffered = True
         Me.Name = "Editor"
         Me.Text = "Editor"
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -109,4 +122,5 @@ Partial Class Editor
     Friend WithEvents btnDeleteGameObject As Button
     Friend WithEvents txtName As TextBox
     Friend WithEvents cbRoot As CheckBox
+    Friend WithEvents NumericUpDown1 As NumericUpDown
 End Class

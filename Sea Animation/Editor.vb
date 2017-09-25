@@ -155,4 +155,8 @@ Public Class Editor
         dropNode.EnsureVisible()
         selectedTreeView.SelectedNode = dropNode
     End Sub
+
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
+        Form1.Timer1.Interval = NumericUpDown1.Value
+    End Sub
 End Class

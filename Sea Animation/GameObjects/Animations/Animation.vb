@@ -22,9 +22,9 @@ Public MustInherit Class Animation
     End Function
     Public MustOverride Function GetTransformation() As Matrix3x2
 
-    Public Overridable Sub updateRenderObject(ByRef renderObject As RenderObject)
+    Public Overridable Sub UpdateRenderObject(ByRef renderObject As RenderObject)
         For Each child In children
-            child.updateRenderObject(renderObject)
+            child.UpdateRenderObject(renderObject)
         Next
     End Sub
 End Class

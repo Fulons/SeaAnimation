@@ -90,6 +90,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GameObjects\Animations\Animation.vb" />
+    <Compile Include="GameObjects\Animations\LinearMoveAnimation.vb" />
     <Compile Include="GameObjects\Controls\AnimationControl.Designer.vb">
       <DependentUpon>AnimationControl.vb</DependentUpon>
     </Compile>
@@ -100,6 +101,12 @@
       <DependentUpon>GameObjectControl.vb</DependentUpon>
     </Compile>
     <Compile Include="GameObjects\Controls\GameObjectControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GameObjects\Controls\LinearMoveAnimationControl.Designer.vb">
+      <DependentUpon>LinearMoveAnimationControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GameObjects\Controls\LinearMoveAnimationControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GameObjects\Controls\PostitionControl.Designer.vb">
@@ -161,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GameObjects\Controls\GameObjectControl.resx">
       <DependentUpon>GameObjectControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameObjects\Controls\LinearMoveAnimationControl.resx">
+      <DependentUpon>LinearMoveAnimationControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameObjects\Controls\PostitionControl.resx">
       <DependentUpon>PostitionControl.vb</DependentUpon>

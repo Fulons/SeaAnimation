@@ -76,7 +76,7 @@ Partial Class RenderableControl
         Me.AnimationControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.AnimationControl1.Location = New System.Drawing.Point(358, 3)
         Me.AnimationControl1.Name = "AnimationControl1"
-        Me.AnimationControl1.Size = New System.Drawing.Size(156, 58)
+        Me.AnimationControl1.Size = New System.Drawing.Size(0, 0)
         Me.AnimationControl1.TabIndex = 6
         '
         'btnAddAnimation
@@ -101,7 +101,7 @@ Partial Class RenderableControl
         '
         Me.cbAnimationType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbAnimationType.FormattingEnabled = True
-        Me.cbAnimationType.Items.AddRange(New Object() {"RotatorAnimation"})
+        Me.cbAnimationType.Items.AddRange(New Object() {"RotatorAnimation", "LinearMoveAnimation"})
         Me.cbAnimationType.Location = New System.Drawing.Point(201, 251)
         Me.cbAnimationType.Name = "cbAnimationType"
         Me.cbAnimationType.Size = New System.Drawing.Size(151, 21)
@@ -122,7 +122,7 @@ Partial Class RenderableControl
         Me.Controls.Add(Me.pbRenderObject)
         Me.Controls.Add(Me.pos)
         Me.Name = "RenderableControl"
-        Me.Size = New System.Drawing.Size(517, 275)
+        Me.Size = New System.Drawing.Size(361, 275)
         CType(Me.pbRenderObject, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

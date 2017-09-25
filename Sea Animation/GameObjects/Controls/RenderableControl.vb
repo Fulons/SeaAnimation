@@ -4,6 +4,8 @@
         n.Name = r.id.ToString()
         If TypeOf r Is RotatorAnimation Then
             n.Text = "RotatorAnimation"
+        ElseIf TypeOf r Is LinearMoveAnimation Then
+            n.Text = "LinearMoveAnimation"
         End If
 
         For Each child As Animation In r.children
@@ -71,12 +73,19 @@
     End Sub
 
     Private Sub btnAddAnimation_Click(sender As Object, e As EventArgs) Handles btnAddAnimation.Click
-        If Form1.selectedAnimation Is Nothing Then
-            If cbAnimationType.Text = "RotatorAnimation" Then
-                Form1.selectedRenderable.animation = New RotatorAnimation
-            End If
+        Dim a As Animation
+        If cbAnimationType.Text = "RotatorAnimation" Then
+            a = New RotatorAnimation
+        ElseIf cbAnimationType.Text = "LinearMoveAnimation" Then
+            a = New LinearMoveAnimation
         Else
-            Form1.selectedAnimation.children.Add(New RotatorAnimation)
+            Return
+        End If
+
+        If Form1.selectedAnimation Is Nothing Then
+            Form1.selectedRenderable.animation = a
+        Else
+            Form1.selectedAnimation.children.Add(a)
         End If
         Editor.GameObjectControl1.RenderableControl1.SetValues(Form1.selectedRenderable)
     End Sub
@@ -172,5 +181,4 @@
         dropNode.EnsureVisible()
         selectedTreeView.SelectedNode = dropNode
     End Sub
-
 End Class
