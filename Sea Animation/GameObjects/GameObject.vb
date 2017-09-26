@@ -86,4 +86,11 @@ Public Class GameObject
 
     End Sub
 
+    Public Sub RestartAnimation()
+        renderable.RestartAnimation()
+        For Each child In children
+            child.RestartAnimation()
+        Next
+    End Sub
+
 End Class

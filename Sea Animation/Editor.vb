@@ -192,4 +192,10 @@ Public Class Editor
         End If
 
     End Sub
+
+    Private Sub btnRestartAnimation_Click(sender As Object, e As EventArgs) Handles btnRestartAnimation.Click
+        For Each go In Form1.gameObjects
+            go.RestartAnimation()
+        Next
+    End Sub
 End Class

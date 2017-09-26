@@ -96,4 +96,13 @@ Public Class Renderable
             End If
         Next
     End Sub
+
+    Public Sub RestartAnimation()
+        If animation IsNot Nothing Then
+            animation.RestartAnimation()
+        End If
+        For Each child In children
+            child.RestartAnimation()
+        Next
+    End Sub
 End Class

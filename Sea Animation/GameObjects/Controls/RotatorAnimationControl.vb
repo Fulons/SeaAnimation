@@ -1,4 +1,5 @@
-﻿Public Class RotatorAnimationControl
+﻿
+Public Class RotatorAnimationControl
     Public Sub SetValues(a As RotatorAnimation)
         Me.udSpeed.Value = a.speed
         If Me.cbDeg.Checked = False Then

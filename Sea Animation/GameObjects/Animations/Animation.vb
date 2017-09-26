@@ -53,4 +53,8 @@ Public MustInherit Class Animation
             End If
         Next
     End Sub
+
+    Public MustOverride Sub RestartAnimation()
+
+
 End Class

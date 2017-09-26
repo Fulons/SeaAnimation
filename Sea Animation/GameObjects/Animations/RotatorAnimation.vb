@@ -62,5 +62,10 @@ Public Class RotatorAnimation : Inherits Animation
         LoadChildren(node)
     End Sub
 
-
+    Public Overrides Sub RestartAnimation()
+        angle = 0
+        For Each child In children
+            child.RestartAnimation()
+        Next
+    End Sub
 End Class

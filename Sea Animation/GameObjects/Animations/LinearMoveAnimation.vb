@@ -11,7 +11,7 @@ Public Class LinearMoveAnimation : Inherits Animation
         End Get
         Set(value As Vector2)
             _target = value
-            Recalculate()
+            RestartAnimation()
         End Set
     End Property
     Private _speed As Double = 0
@@ -21,7 +21,7 @@ Public Class LinearMoveAnimation : Inherits Animation
         End Get
         Set(value As Double)
             _speed = value
-            Recalculate()
+            RestartAnimation()
         End Set
     End Property
 
@@ -50,7 +50,7 @@ Public Class LinearMoveAnimation : Inherits Animation
 
     Public Sub New(node As XmlNode)
         Me.Load(node)
-        Recalculate()
+        RestartAnimation()
     End Sub
 
     Public Overrides Function GetTransformation() As Matrix3x2
@@ -151,5 +151,12 @@ Public Class LinearMoveAnimation : Inherits Animation
             End If
         Next
         LoadChildren(node)
+    End Sub
+
+    Public Overrides Sub RestartAnimation()
+        Recalculate()
+        For Each child In children
+            child.RestartAnimation()
+        Next
     End Sub
 End Class

@@ -33,6 +33,7 @@ Partial Class Editor
         Me.btnLoad = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.btnRestartAnimation = New System.Windows.Forms.Button()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -126,12 +127,22 @@ Partial Class Editor
         '
         Me.SaveFileDialog1.InitialDirectory = "/Data"
         '
+        'btnRestartAnimation
+        '
+        Me.btnRestartAnimation.Location = New System.Drawing.Point(418, 633)
+        Me.btnRestartAnimation.Name = "btnRestartAnimation"
+        Me.btnRestartAnimation.Size = New System.Drawing.Size(106, 23)
+        Me.btnRestartAnimation.TabIndex = 12
+        Me.btnRestartAnimation.Text = "Restart Animations"
+        Me.btnRestartAnimation.UseVisualStyleBackColor = True
+        '
         'Editor
         '
         Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(983, 659)
+        Me.Controls.Add(Me.btnRestartAnimation)
         Me.Controls.Add(Me.btnLoad)
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.NumericUpDown1)
@@ -160,4 +171,5 @@ Partial Class Editor
     Friend WithEvents btnLoad As Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents btnRestartAnimation As Button
 End Class
