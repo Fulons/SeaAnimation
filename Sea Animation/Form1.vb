@@ -16,6 +16,9 @@ Public Class Form1
     Public selectedGameObject As GameObject         'Currently selected Gameobject in the GameObject Treeview in the Editor
     Public selectedRenderable As Renderable         'Currently selected Renderable in the Renderable Treeview in the Editor
     Public selectedAnimation As Animation           'Currently selected Animation in the Animation Treeview in the Editor
+
+    Private soundCount As Integer = 0
+    Private sounds As New Sound
 #End Region
 
 #Region "Set selected: Methods that sets selectedGameObject, selectedRenderable or selectedAnimation"
@@ -30,7 +33,7 @@ Public Class Form1
 
         Me.Invalidate()
         tick += 1
-        'My.Computer.Audio.Play()
+
 
     End Sub
 
@@ -171,6 +174,7 @@ Public Class Form1
 #End Region
 #Region "Form event handlers: Handles loading, painting and key evenets"
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         sw.Start()
         ticksLastFrame = sw.ElapsedTicks
     End Sub
@@ -183,6 +187,24 @@ Public Class Form1
 
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue < 255 Then key(e.KeyValue) = True
+        If e.KeyValue = Keys.NumPad9 Then
+            'My.Computer.Audio.Play(resourcePath + "Sound\fog.wav", AudioPlayMode.Background)
+            With sounds
+                .Name = "SOUND" & soundCount
+            End With
+            sounds.Play(0, True)
+            soundCount += 1
+        ElseIf e.KeyValue = Keys.NumPad8 Then
+            With sounds
+                .Name = "SOUND" & soundCount
+            End With
+            sounds.Play(2, False)
+            soundCount += 1
+        ElseIf e.KeyValue = Keys.NumPad0 Then
+            For i = 0 To soundCount
+                sounds.Kill("SOUND" & i)
+            Next
+        End If
     End Sub
 
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp

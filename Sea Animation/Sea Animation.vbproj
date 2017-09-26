@@ -153,6 +153,7 @@
     <Compile Include="GameObjects\RenderObjects\ImageRenderObject.vb" />
     <Compile Include="GameObjects\Renderable.vb" />
     <Compile Include="GameObjects\RenderObjects\RenderObject.vb" />
+    <Compile Include="Sound.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Editor.resx">
