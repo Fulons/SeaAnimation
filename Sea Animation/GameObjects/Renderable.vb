@@ -1,21 +1,27 @@
 ﻿Imports System.Xml
 
 Public Class Renderable
+#Region "Member variables"
     Public what As RenderObject
     Public where As Vector2
     Public animation As Animation
     Public id As Guid
 
     Public children As New List(Of Renderable)
+#End Region
 
+#Region "Constructors"
     Public Sub New()
         id = Guid.NewGuid()
     End Sub
 
-    Public Sub New(node As XmlElement)
+    'Creates a renderable from an XmlNode
+    Public Sub New(node As XmlNode)
         Load(node)
     End Sub
-
+#End Region
+#Region "Public Methods"
+    'Updates all animations and children
     Public Sub Update(dt As Double)
         If animation IsNot Nothing Then
             animation.Update(dt)
@@ -26,10 +32,12 @@ Public Class Renderable
         Next
     End Sub
 
+    'Renders a preview of the RenderObject into g
     Public Sub RenderPreview(ByRef g As Graphics, size As Vector2)
         what.RenderPreview(g, size)
     End Sub
 
+    'Uses a transform stack to transform the object and its children according to the position of parent and animation transformation
     Public Sub Render(ByRef g As Graphics, ByRef transformStack As Stack(Of Matrix3x2))
         Dim m As Matrix3x2 = Matrix3x2.Identity
         If animation IsNot Nothing Then
@@ -45,6 +53,18 @@ Public Class Renderable
         transformStack.Pop()
     End Sub
 
+    'Restarts the animation and all childrens animation to ensure they are synced up
+    Public Sub RestartAnimation()
+        If animation IsNot Nothing Then
+            animation.RestartAnimation()
+        End If
+        For Each child In children
+            child.RestartAnimation()
+        Next
+    End Sub
+#End Region
+#Region "Save/Load"
+    'Creates a xmlNode containing all essential member variables
     Public Function Save(doc As XmlDocument) As XmlNode
         Dim n As XmlNode = doc.CreateNode(XmlNodeType.Element, "Renderable", "")
 
@@ -75,6 +95,7 @@ Public Class Renderable
         Return n
     End Function
 
+    'Loads values from a xmlNode
     Public Sub Load(node As XmlNode)
         For Each attribute As XmlAttribute In node.Attributes
             If attribute.Name = "id" Then
@@ -96,13 +117,5 @@ Public Class Renderable
             End If
         Next
     End Sub
-
-    Public Sub RestartAnimation()
-        If animation IsNot Nothing Then
-            animation.RestartAnimation()
-        End If
-        For Each child In children
-            child.RestartAnimation()
-        Next
-    End Sub
+#End Region
 End Class

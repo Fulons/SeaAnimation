@@ -1,14 +1,7 @@
 ﻿
 
 Public Class LinearMoveAnimationControl
-
-    Public Sub SetValues(a As LinearMoveAnimation)
-        Me.posTarget.SetVec(a.target)
-        Me.udSpeed.Value = a.speed
-        Me.cbReturn.Checked = a.returnAfterTargetReached
-        Me.cbRepeat.Checked = a.repeat
-    End Sub
-
+#Region "Event handlers"
     Private Sub cbRepeat_CheckedChanged(sender As Object, e As EventArgs) Handles cbRepeat.CheckedChanged
         Dim a As LinearMoveAnimation = CType(Form1.selectedAnimation, LinearMoveAnimation)
         a.repeat = cbRepeat.Checked
@@ -32,5 +25,13 @@ Public Class LinearMoveAnimationControl
     Private Sub posTarget_YPosChanged(val As Double) Handles posTarget.YPosChanged
         Dim a As LinearMoveAnimation = CType(Form1.selectedAnimation, LinearMoveAnimation)
         a.target = New Vector2(a.target.X, val)
+    End Sub
+#End Region
+    ''Helper function to easily set all the control values from a LinearMoveAnimation object
+    Public Sub SetValues(a As LinearMoveAnimation)
+        Me.posTarget.SetVec(a.target)
+        Me.udSpeed.Value = a.speed
+        Me.cbReturn.Checked = a.returnAfterTargetReached
+        Me.cbRepeat.Checked = a.repeat
     End Sub
 End Class

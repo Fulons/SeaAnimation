@@ -24,24 +24,12 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.imgSky2 = New System.Windows.Forms.PictureBox()
-        CType(Me.imgSky2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Timer1
         '
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 16
-        '
-        'imgSky2
-        '
-        Me.imgSky2.Image = Global.Sea_Animation.My.Resources.Resources.seaSky
-        Me.imgSky2.Location = New System.Drawing.Point(0, 1193)
-        Me.imgSky2.Name = "imgSky2"
-        Me.imgSky2.Size = New System.Drawing.Size(1193, 588)
-        Me.imgSky2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.imgSky2.TabIndex = 1
-        Me.imgSky2.TabStop = False
         '
         'Form1
         '
@@ -50,18 +38,14 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(960, 720)
-        Me.Controls.Add(Me.imgSky2)
         Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.Color.Transparent
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"
-        CType(Me.imgSky2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
-    Friend WithEvents imgSky2 As System.Windows.Forms.PictureBox
 End Class

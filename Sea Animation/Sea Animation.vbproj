@@ -144,7 +144,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Rendering.vb" />
     <Compile Include="GameObjects\Controls\ImageRenderObjectControl.Designer.vb">
       <DependentUpon>ImageRenderObjectControl.vb</DependentUpon>
     </Compile>
@@ -154,7 +153,6 @@
     <Compile Include="GameObjects\RenderObjects\ImageRenderObject.vb" />
     <Compile Include="GameObjects\Renderable.vb" />
     <Compile Include="GameObjects\RenderObjects\RenderObject.vb" />
-    <Compile Include="Vec2.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Editor.resx">
@@ -183,9 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="GameObjects\Controls\ImageRenderObjectControl.resx">
       <DependentUpon>ImageRenderObjectControl.vb</DependentUpon>
@@ -202,12 +200,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\seaSky.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\seaShip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

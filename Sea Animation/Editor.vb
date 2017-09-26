@@ -1,6 +1,8 @@
 ﻿Imports System.Xml
 
 Public Class Editor
+#Region "Form Events"
+    'On load, Create GameObject TreeView and initialise Save and Load file Dialogs
     Private Sub Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CreateGameObjectTree()
         GameObjectControl1.Hide()
@@ -16,16 +18,46 @@ Public Class Editor
         btnAddGameObject.Enabled = False
     End Sub
 
-    Private Sub CreateGameObjectTree()
-        GameObjectControl1.Hide()
-        tvGameObjects.Nodes.Clear()
-        For Each go As GameObject In Form1.gameObjects
-            Dim node As New TreeNode
-            PopulateGameObjectTreeView(node, go)
-            tvGameObjects.Nodes.Add(node)
-        Next
+    'When name of GameObject is changed in the GameObjectControl1 Control
+    Private Sub OnNameChange(name As String) Handles GameObjectControl1.NameChange
+        tvGameObjects.SelectedNode.Text = name
     End Sub
 
+    'When btnAddGameObject is pressed
+    Private Sub btnAddGameObject_Click(sender As Object, e As EventArgs) Handles btnAddGameObject.Click
+        AddGameObject()
+    End Sub
+
+    'When btnDeleteGameObject is pressed
+    Private Sub btnDeleteGameObject_Click(sender As Object, e As EventArgs) Handles btnDeleteGameObject.Click
+        DeleteSelectedObject()
+    End Sub
+
+    'Disables or enables add button depending on the validity of the text in txtName control
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txtName.TextChanged
+        If Not String.IsNullOrEmpty(txtName.Text) Then
+            btnAddGameObject.Enabled = True
+        Else
+            btnAddGameObject.Enabled = False
+        End If
+    End Sub
+
+    'Deletes currently selected objects if tvGameObjects has focus
+    Private Sub tvGameObjects_KeyDown(sender As Object, e As KeyEventArgs) Handles tvGameObjects.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            DeleteSelectedObject()
+        End If
+    End Sub
+
+    'Add game object if enter is pressed and txtName has focus
+    Private Sub txtName_KeyDown(sender As Object, e As KeyEventArgs) Handles txtName.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            AddGameObject()
+        End If
+    End Sub
+#End Region
+#Region "GameObject TreeView"
+    'Recursive function used by CreateGameObjectTree to populate the GameObject TreeView
     Private Sub PopulateGameObjectTreeView(ByRef n As TreeNode, ByRef go As GameObject)
         n.Name = go.name
         n.Text = go.name
@@ -36,6 +68,18 @@ Public Class Editor
         Next
     End Sub
 
+    'Populates the GameObject TreeView
+    Private Sub CreateGameObjectTree()
+        GameObjectControl1.Hide()
+        tvGameObjects.Nodes.Clear()
+        For Each go As GameObject In Form1.gameObjects
+            Dim node As New TreeNode
+            PopulateGameObjectTreeView(node, go)
+            tvGameObjects.Nodes.Add(node)
+        Next
+    End Sub
+
+    'When a GameObject is selected
     Private Sub tvGameObjects_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles tvGameObjects.AfterSelect
         Form1.SelectGameObject(tvGameObjects.SelectedNode.Text)
         If Form1.selectedGameObject IsNot Nothing Then
@@ -44,31 +88,6 @@ Public Class Editor
         Else
             GameObjectControl1.Hide()
         End If
-    End Sub
-
-    Private Sub OnNameChange(name As String) Handles GameObjectControl1.NameChange
-        tvGameObjects.SelectedNode.Text = name
-    End Sub
-
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txtName.TextChanged
-        If Not String.IsNullOrEmpty(txtName.Text) Then
-            btnAddGameObject.Enabled = True
-        Else
-            btnAddGameObject.Enabled = False
-        End If
-    End Sub
-
-    Private Sub AddGameObject()
-        If Form1.selectedGameObject Is Nothing Or cbRoot.Checked = True Then
-            Form1.gameObjects.Add(New GameObject(txtName.Text))
-        Else
-            Form1.selectedGameObject.children.Add(New GameObject(txtName.Text))
-        End If
-        CreateGameObjectTree()
-    End Sub
-
-    Private Sub btnAddGameObject_Click(sender As Object, e As EventArgs) Handles btnAddGameObject.Click
-        AddGameObject()
     End Sub
 
     Private Sub DeleteSelectedObject()
@@ -90,22 +109,6 @@ Public Class Editor
                     Return
                 End If
             Next
-        End If
-    End Sub
-
-    Private Sub btnDeleteGameObject_Click(sender As Object, e As EventArgs) Handles btnDeleteGameObject.Click
-        DeleteSelectedObject()
-    End Sub
-
-    Private Sub tvGameObjects_KeyDown(sender As Object, e As KeyEventArgs) Handles tvGameObjects.KeyDown
-        If e.KeyCode = Keys.Delete Then
-            DeleteSelectedObject()
-        End If
-    End Sub
-
-    Private Sub txtName_KeyDown(sender As Object, e As KeyEventArgs) Handles txtName.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            AddGameObject()
         End If
     End Sub
 
@@ -190,7 +193,6 @@ Public Class Editor
                 MessageBox.Show("Cannot read file from disk.... " & ex.Message)
             End Try
         End If
-
     End Sub
 
     Private Sub btnRestartAnimation_Click(sender As Object, e As EventArgs) Handles btnRestartAnimation.Click
@@ -198,4 +200,16 @@ Public Class Editor
             go.RestartAnimation()
         Next
     End Sub
+#End Region
+#Region "Add GameObject"
+    'Adds a gameObject to selectedGameObject or Form1 if no GameObject is selected and recreates the GameObject TreeView
+    Private Sub AddGameObject()
+        If Form1.selectedGameObject Is Nothing Or cbRoot.Checked = True Then
+            Form1.gameObjects.Add(New GameObject(txtName.Text))
+        Else
+            Form1.selectedGameObject.children.Add(New GameObject(txtName.Text))
+        End If
+        CreateGameObjectTree()
+    End Sub
+#End Region
 End Class

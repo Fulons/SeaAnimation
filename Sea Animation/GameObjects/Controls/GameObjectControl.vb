@@ -1,7 +1,13 @@
 ﻿Imports System.Drawing.Drawing2D
 
 Public Class GameObjectControl
+#Region "Member variables"
+    Public Event NameChange(name As String) 'Raised when the txtName text changes
+    Dim imagePath As String 'Stores the path of the image waiting to be added as a renderable
+#End Region
 
+#Region "Private helper Functions"
+    'Helper function used by CreateChildTree to recursively create the Renderable TreeView
     Private Sub CreateChildTreeRecursive(n As TreeNode, r As Renderable)
         Dim Image As New Bitmap(ilRenderableIcons.ImageSize.Width, ilRenderableIcons.ImageSize.Height)
         Dim g As Graphics = Graphics.FromImage(Image)
@@ -20,8 +26,8 @@ Public Class GameObjectControl
         Next
     End Sub
 
+    'Creates the Renderable TreeView
     Public Sub CreateChildTree(r As Renderable)
-
         tvRenderables.Nodes.Clear()
         ilRenderableIcons.Images.Clear()
         If r IsNot Nothing Then
@@ -31,17 +37,33 @@ Public Class GameObjectControl
         End If
     End Sub
 
+    Private Sub DeleteSelectedRenderable()
+        If tvRenderables.SelectedNode Is Nothing Then Return
+        Dim r As Renderable = Form1.selectedRenderable
+        Form1.selectedRenderable = Nothing
+        If tvRenderables.SelectedNode.Parent Is Nothing Then
+            Form1.selectedGameObject.renderable = Nothing
+            SetValues(Form1.selectedGameObject)
+        Else
+            Form1.SelectRenderable(Guid.Parse(tvRenderables.SelectedNode.Parent.Name))
+            For i As Integer = 0 To Form1.selectedRenderable.children.Count - 1
+                If Form1.selectedRenderable.children(i).id = r.id Then
+                    Form1.selectedRenderable.children.RemoveAt(i)
+                    Dim t As TreeNode = tvRenderables.SelectedNode.Parent
+                    tvRenderables.Nodes.Remove(tvRenderables.SelectedNode)
+                    tvRenderables.SelectedNode = t
+                    SetValues(Form1.selectedGameObject)
+                    Return
+                End If
+            Next
+        End If
+    End Sub
+#End Region
+#Region "Event handlers"
     Private Sub GameObjectControl_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         pbImageRenderObject.AllowDrop = True
         RenderableControl1.Hide()
         btnAddRenderable.Enabled = False
-    End Sub
-
-    Public Sub SetValues(ByRef go As GameObject)
-        txtName.Text = go.name
-        pos.SetVec(go.pos)
-        CreateChildTree(go.renderable)
-        RenderableControl1.Hide()
     End Sub
 
     Private Sub tvRenderables_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles tvRenderables.AfterSelect
@@ -62,15 +84,13 @@ Public Class GameObjectControl
         Form1.selectedGameObject.pos.Y = val
     End Sub
 
-    Public Event NameChange(name As String)
-
     Private Sub txtName_TextChanged(sender As Object, e As EventArgs) Handles txtName.TextChanged
         If Not String.IsNullOrEmpty(txtName.Text) Then
             Form1.selectedGameObject.name = txtName.Text
             RaiseEvent NameChange(txtName.Text)
         End If
     End Sub
-    Dim imagePath As String
+
     Private Sub pbImageRenderObject_DragDrop(sender As Object, e As DragEventArgs) Handles pbImageRenderObject.DragDrop
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
         For Each path In files
@@ -102,28 +122,6 @@ Public Class GameObjectControl
             Form1.selectedRenderable.children.Add(r)
         End If
         Editor.GameObjectControl1.SetValues(Form1.selectedGameObject)
-    End Sub
-
-    Private Sub DeleteSelectedRenderable()
-        If tvRenderables.SelectedNode Is Nothing Then Return
-        Dim r As Renderable = Form1.selectedRenderable
-        Form1.selectedRenderable = Nothing
-        If tvRenderables.SelectedNode.Parent Is Nothing Then
-            Form1.selectedGameObject.renderable = Nothing
-            SetValues(Form1.selectedGameObject)
-        Else
-            Form1.SelectRenderable(Guid.Parse(tvRenderables.SelectedNode.Parent.Name))
-            For i As Integer = 0 To Form1.selectedRenderable.children.Count - 1
-                If Form1.selectedRenderable.children(i).id = r.id Then
-                    Form1.selectedRenderable.children.RemoveAt(i)
-                    Dim t As TreeNode = tvRenderables.SelectedNode.Parent
-                    tvRenderables.Nodes.Remove(tvRenderables.SelectedNode)
-                    tvRenderables.SelectedNode = t
-                    SetValues(Form1.selectedGameObject)
-                    Return
-                End If
-            Next
-        End If
     End Sub
 
     Private Sub btnDeleteRenderable_Click(sender As Object, e As EventArgs) Handles btnDeleteRenderable.Click
@@ -204,7 +202,15 @@ Public Class GameObjectControl
         dropNode.EnsureVisible()
         selectedTreeView.SelectedNode = dropNode
     End Sub
+#End Region
 
+    'Helper function to easily set all the control values from a GameObject object
+    Public Sub SetValues(ByRef go As GameObject)
+        txtName.Text = go.name
+        pos.SetVec(go.pos)
+        CreateChildTree(go.renderable)
+        RenderableControl1.Hide()
+    End Sub
 
 
 End Class

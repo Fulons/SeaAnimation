@@ -1,12 +1,30 @@
 ﻿Imports System.Xml
 
 Public Class GameObject
+#Region "Member variables"
     Public renderable As Renderable
     Public name As String
     Public pos As Vector2
 
     Public children As New List(Of GameObject)
+#End Region
 
+#Region "Contructors"
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(name As String)
+        Me.name = name
+    End Sub
+
+    'Creates a new GameObject from a xmlNode
+    Public Sub New(node As XmlNode)
+        Me.Load(node)
+    End Sub
+#End Region
+#Region "Public Methods"
+    'Update the renderable and all children
     Public Sub Update(dt As Double)
         If renderable IsNot Nothing Then
             renderable.Update(dt)
@@ -16,18 +34,7 @@ Public Class GameObject
         Next
     End Sub
 
-    Public Sub New()
-
-    End Sub
-
-    Public Sub New(name As String)
-        Me.name = name
-    End Sub
-
-    Public Sub New(node As XmlNode)
-        Me.Load(node)
-    End Sub
-
+    'Draws the renderable and all children
     Public Sub Draw(ByRef g As Graphics)
         Dim transformStack As New Stack(Of Matrix3x2)
         transformStack.Push(Matrix3x2.CreateTranslation(pos))
@@ -39,6 +46,16 @@ Public Class GameObject
         Next
     End Sub
 
+    'Restarts the renderables animation and all childrens renderables animations to ensure they are synced up
+    Public Sub RestartAnimation()
+        renderable.RestartAnimation()
+        For Each child In children
+            child.RestartAnimation()
+        Next
+    End Sub
+#End Region
+#Region "Save/Load"
+    'Creates a xmlNode containing all essential member variables
     Public Function Save(doc As XmlDocument) As XmlNode
         Dim n As XmlNode = doc.CreateNode(XmlNodeType.Element, "GameObject", "")
 
@@ -65,6 +82,8 @@ Public Class GameObject
 
         Return n
     End Function
+
+    'Loads values from a xmlNode
     Public Sub Load(node As XmlNode)
         For Each attribute As XmlAttribute In node.Attributes
             If attribute.Name = "Name" Then
@@ -85,12 +104,5 @@ Public Class GameObject
         Next
 
     End Sub
-
-    Public Sub RestartAnimation()
-        renderable.RestartAnimation()
-        For Each child In children
-            child.RestartAnimation()
-        Next
-    End Sub
-
+#End Region
 End Class

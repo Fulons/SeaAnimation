@@ -2,9 +2,13 @@
 Imports System.Drawing.Drawing2D
 
 Public Class ImageRenderObject : Inherits RenderObject
-    Public img As Image
-    Public path As String
+#Region "Member variables"
+    Public img As Image     'Image that is rendered
+    Public path As String   'Path of the image on disk
+#End Region
 
+#Region "Constructors"
+    'Load image with no path (no image placeholder should be used)
     Public Sub New(img As Image, Optional centered As Boolean = False)
         Me.path = "NoPath"
         Me.img = img
@@ -17,10 +21,13 @@ Public Class ImageRenderObject : Inherits RenderObject
         Me.centered = centered
     End Sub
 
+    'Load image from XmlNode
     Public Sub New(node As XmlNode)
         Me.Load(node)
     End Sub
-
+#End Region
+#Region "Public ovverides methods"
+    'Render image to screen
     Public Overrides Sub Render(ByRef g As Graphics)
         If centered = True Then
             g.DrawImage(img, New RectangleF(-img.Width / 2, -img.Height / 2, img.Width, img.Height))
@@ -29,6 +36,7 @@ Public Class ImageRenderObject : Inherits RenderObject
         End If
     End Sub
 
+    'Render preview to Graphics (g)
     Public Overrides Sub RenderPreview(ByRef g As Graphics, size As Vector2)
         Dim scaleX As Double = img.Size.Width / size.X
         Dim scaleY As Double = img.Size.Height / size.Y
@@ -39,6 +47,7 @@ Public Class ImageRenderObject : Inherits RenderObject
         End If
     End Sub
 
+    'Loads values from XmlNode
     Public Overrides Sub Load(node As XmlNode)
         For Each attribute As XmlAttribute In node.Attributes
             If attribute.Name = "Centered" Then
@@ -61,6 +70,7 @@ Public Class ImageRenderObject : Inherits RenderObject
         Next
     End Sub
 
+    'Creates an XmlNode represention of the object
     Public Overrides Function Save(doc As XmlDocument) As XmlNode
         Dim n As XmlNode = doc.CreateNode(XmlNodeType.Element, "RenderObject", "")
 
@@ -79,4 +89,5 @@ Public Class ImageRenderObject : Inherits RenderObject
 
         Return n
     End Function
+#End Region
 End Class

@@ -3,7 +3,7 @@ Imports System.Xml
 Imports Sea_Animation
 
 Public Class LinearMoveAnimation : Inherits Animation
-
+#Region "Member variables"
     Private _target As New Vector2(0, 0)
     Public Property target As Vector2
         Get
@@ -32,7 +32,20 @@ Public Class LinearMoveAnimation : Inherits Animation
     Private reverse As Boolean = False
     Private currentPos As New Vector2(0, 0)
     Private targetReached As Boolean = False
+#End Region
 
+#Region "Constructors"
+    Public Sub New()
+
+    End Sub
+
+    'Creates LinearMoveAnimation from XmlNode
+    Public Sub New(node As XmlNode)
+        Me.Load(node)
+        RestartAnimation()
+    End Sub
+#End Region
+#Region "Private helper methods"
     Private Sub Recalculate()
         If _target.X = 0 AndAlso _target.Y = 0 Then
             direction = New Vector2(0, 0)
@@ -43,16 +56,8 @@ Public Class LinearMoveAnimation : Inherits Animation
         currentPos = New Vector2(0, 0)
         targetReached = False
     End Sub
-
-    Public Sub New()
-
-    End Sub
-
-    Public Sub New(node As XmlNode)
-        Me.Load(node)
-        RestartAnimation()
-    End Sub
-
+#End Region
+#Region "Public overrides methods"
     Public Overrides Function GetTransformation() As Matrix3x2
         Dim m As Matrix3x2 = GetChildrenTransformation()
         Dim a As Matrix3x2 = Matrix3x2.CreateTranslation(currentPos)
@@ -61,9 +66,7 @@ Public Class LinearMoveAnimation : Inherits Animation
 
     Public Overrides Sub Update(dt As Double)
         MyBase.Update(dt)
-
         If targetReached = True Then Return
-
         currentPos += direction * _speed * dt
         If reverse = True Then
             If Vector2.DistanceSquared(_target, currentPos) > Vector2.DistanceSquared(target, New Vector2(0, 0)) Then
@@ -159,4 +162,5 @@ Public Class LinearMoveAnimation : Inherits Animation
             child.RestartAnimation()
         Next
     End Sub
+#End Region
 End Class

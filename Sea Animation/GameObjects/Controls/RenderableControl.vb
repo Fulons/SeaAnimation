@@ -1,5 +1,6 @@
 ﻿Public Class RenderableControl
 
+#Region "Private helper Functions"
     Private Sub CreateAnimationTree(ByRef n As TreeNode, ByRef r As Animation)
         n.Name = r.id.ToString()
         If TypeOf r Is RotatorAnimation Then
@@ -15,25 +16,29 @@
         Next
     End Sub
 
-    Public Sub SetValues(ByRef r As Renderable)
-        pos.SetVec(r.where)
-
-        Dim img As New Bitmap(pbRenderObject.Width, pbRenderObject.Height)
-        Dim g As Graphics = Graphics.FromImage(img)
-
-        r.RenderPreview(g, New Vector2(pbRenderObject.Width, pbRenderObject.Height))
-        pbRenderObject.Image = img
-
-        cbCentered.Checked = r.what.centered
-        tvAnimations.Nodes.Clear()
-        If r.animation IsNot Nothing Then
-            Dim n As New TreeNode()
-            CreateAnimationTree(n, r.animation)
-            tvAnimations.Nodes.Add(n)
+    Private Sub DeleteSelectedAnimation()
+        If tvAnimations.SelectedNode Is Nothing Then Return
+        Dim a As Animation = Form1.selectedAnimation
+        Form1.selectedAnimation = Nothing
+        If tvAnimations.SelectedNode.Parent Is Nothing Then
+            Form1.selectedRenderable.animation = Nothing
+            tvAnimations.Nodes.Clear()
+        Else
+            Form1.SelectAnimation(Guid.Parse(tvAnimations.SelectedNode.Parent.Name))
+            For i As Integer = 0 To Form1.selectedAnimation.children.Count - 1
+                If Form1.selectedAnimation.children(i).id = a.id Then
+                    Form1.selectedAnimation.children.RemoveAt(i)
+                    Dim t As TreeNode = tvAnimations.SelectedNode.Parent
+                    tvAnimations.Nodes.Remove(tvAnimations.SelectedNode)
+                    tvAnimations.SelectedNode = t
+                    Return
+                End If
+            Next
         End If
-        AnimationControl1.Hide()
+        Me.SetValues(Form1.selectedRenderable)
     End Sub
-
+#End Region
+#Region "Event handlers"
     Private Sub tvAnimations_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles tvAnimations.AfterSelect
         Form1.SelectAnimation(Guid.Parse(tvAnimations.SelectedNode.Name))
         If Form1.selectedAnimation IsNot Nothing Then
@@ -91,28 +96,6 @@
         Editor.GameObjectControl1.RenderableControl1.SetValues(Form1.selectedRenderable)
     End Sub
 
-    Private Sub DeleteSelectedAnimation()
-        If tvAnimations.SelectedNode Is Nothing Then Return
-        Dim a As Animation = Form1.selectedAnimation
-        Form1.selectedAnimation = Nothing
-        If tvAnimations.SelectedNode.Parent Is Nothing Then
-            Form1.selectedRenderable.animation = Nothing
-            tvAnimations.Nodes.Clear()
-        Else
-            Form1.SelectAnimation(Guid.Parse(tvAnimations.SelectedNode.Parent.Name))
-            For i As Integer = 0 To Form1.selectedAnimation.children.Count - 1
-                If Form1.selectedAnimation.children(i).id = a.id Then
-                    Form1.selectedAnimation.children.RemoveAt(i)
-                    Dim t As TreeNode = tvAnimations.SelectedNode.Parent
-                    tvAnimations.Nodes.Remove(tvAnimations.SelectedNode)
-                    tvAnimations.SelectedNode = t
-                    Return
-                End If
-            Next
-        End If
-        Me.SetValues(Form1.selectedRenderable)
-    End Sub
-
     Private Sub btnRemoveAnimation_Click(sender As Object, e As EventArgs) Handles btnDeleteAnimation.Click
         DeleteSelectedAnimation()
     End Sub
@@ -160,7 +143,6 @@
         e.Effect = DragDropEffects.Move
     End Sub
 
-
     Private Sub tvAnimations_DragDrop(sender As Object, e As DragEventArgs) Handles tvAnimations.DragDrop
         If e.Data.GetDataPresent("System.Windows.Forms.TreeNode", True) = False Then Exit Sub
 
@@ -181,6 +163,26 @@
 
         dropNode.EnsureVisible()
         selectedTreeView.SelectedNode = dropNode
+    End Sub
+#End Region
+    'Helper duntion to easily set control values from a Renderable object
+    Public Sub SetValues(ByRef r As Renderable)
+        pos.SetVec(r.where)
+
+        Dim img As New Bitmap(pbRenderObject.Width, pbRenderObject.Height)
+        Dim g As Graphics = Graphics.FromImage(img)
+
+        r.RenderPreview(g, New Vector2(pbRenderObject.Width, pbRenderObject.Height))
+        pbRenderObject.Image = img
+
+        cbCentered.Checked = r.what.centered
+        tvAnimations.Nodes.Clear()
+        If r.animation IsNot Nothing Then
+            Dim n As New TreeNode()
+            CreateAnimationTree(n, r.animation)
+            tvAnimations.Nodes.Add(n)
+        End If
+        AnimationControl1.Hide()
     End Sub
 
 End Class
