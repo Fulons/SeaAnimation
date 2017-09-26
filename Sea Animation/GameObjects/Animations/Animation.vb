@@ -1,4 +1,5 @@
-﻿
+﻿Imports System.Xml
+
 Public MustInherit Class Animation
     Public children As New List(Of Animation)
     Public id As Guid
@@ -25,6 +26,31 @@ Public MustInherit Class Animation
     Public Overridable Sub UpdateRenderObject(ByRef renderObject As RenderObject)
         For Each child In children
             child.UpdateRenderObject(renderObject)
+        Next
+    End Sub
+
+    Public MustOverride Function Save(doc As XmlDocument) As XmlNode
+    Public MustOverride Sub Load(node As XmlNode)
+
+    Public Shared Function LoadAnimation(ByRef node As XmlNode) As Animation
+        Dim a As Animation = Nothing
+        Dim typeName As XmlNode = node.Attributes.GetNamedItem("Type")
+        If typeName.Value = "LinearMoveAnimation" Then
+            a = New LinearMoveAnimation(node)
+        ElseIf typeName.Value = "RotatorAnimation" Then
+            a = New RotatorAnimation(node)
+        End If
+        Return a
+    End Function
+
+    Protected Sub LoadChildren(ByRef node As XmlNode)
+        For Each child As XmlNode In node.ChildNodes
+            Dim typeName As XmlNode = child.Attributes.GetNamedItem("Type")
+            If typeName.Value = "LinearMoveAnimation" Then
+                children.Add(New LinearMoveAnimation(child))
+            ElseIf typeName.Value = "RotatorAnimation" Then
+                children.Add(New RotatorAnimation(child))
+            End If
         Next
     End Sub
 End Class

@@ -34,8 +34,8 @@ Partial Class RotatorAnimationControl
         'udSpeed
         '
         Me.udSpeed.Location = New System.Drawing.Point(48, 3)
-        Me.udSpeed.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.udSpeed.Minimum = New Decimal(New Integer() {360, 0, 0, -2147483648})
+        Me.udSpeed.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.udSpeed.Minimum = New Decimal(New Integer() {10000, 0, 0, -2147483648})
         Me.udSpeed.Name = "udSpeed"
         Me.udSpeed.Size = New System.Drawing.Size(47, 20)
         Me.udSpeed.TabIndex = 0

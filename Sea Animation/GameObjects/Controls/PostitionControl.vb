@@ -14,7 +14,7 @@ Public Class PostitionControl
 
     Private Sub txtXPos_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtXPos.KeyPress, txtYPos.KeyPress
         Dim c As Integer = Asc(e.KeyChar)
-        If Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso (Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57) Then
+        If Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Asc(e.KeyChar) <> 45 AndAlso (Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57) Then
             e.Handled = True
         End If
     End Sub

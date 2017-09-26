@@ -1,8 +1,9 @@
 ﻿Imports System.Numerics
+Imports System.Xml
 
 Public Class Form1
     'Public animations As New List(Of Animation)
-    Public resourcePath As New String("G:\")
+    Public resourcePath As New String("G:\Data\")
     Public tick As Integer = 0
     Public sw As New Stopwatch
     Public ticksLastFrame As Long
@@ -105,7 +106,7 @@ Public Class Form1
 
     Private Function GetRenderableRecursively(id As Guid, r As Renderable, parent As Renderable, Optional remove As Boolean = False) As Renderable
         If r.id = id Then
-            If remove Then parent.children.Remove(r)
+            If parent IsNot Nothing AndAlso remove Then parent.children.Remove(r)
             Return r
         End If
         For Each child In r.children
@@ -153,8 +154,8 @@ Public Class Form1
     End Sub
 
     Private Sub CreateHelicopter()
-        Dim ro As New ImageRenderObject(Image.FromFile("G:\Images\Helli Anim\helli_1.png"))
-        Dim rotorImage As New ImageRenderObject(Image.FromFile("G:\Images\Helli Anim\helli_prop.png"), True)
+        Dim ro As New ImageRenderObject("G:\Images\Helli Anim\helli_1.png")
+        Dim rotorImage As New ImageRenderObject("G:\Images\Helli Anim\helli_prop.png", True)
 
         Dim a As RotatorAnimation = New RotatorAnimation()
 
@@ -244,6 +245,26 @@ Public Class Form1
 
     Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
         If e.KeyChar = "E" Or e.KeyChar = "e" Then Editor.Show()
+    End Sub
+
+    Public Sub LoadXml(ByRef doc As XmlDocument)
+        For Each node As XmlNode In doc.ChildNodes
+            If node.Name = "Scene" Then
+                For Each n As XmlNode In node.ChildNodes
+                    If n.Name = "GameObject" Then
+                        gameObjects.Add(New GameObject(n))
+                    End If
+                Next
+            End If
+        Next
+    End Sub
+
+    Public Sub SaveXml(ByRef doc As XmlDocument)
+        Dim n As XmlNode = doc.CreateElement("Scene")
+        For Each go As GameObject In gameObjects
+            n.AppendChild(go.Save(doc))
+        Next
+        doc.AppendChild(n)
     End Sub
 
 End Class

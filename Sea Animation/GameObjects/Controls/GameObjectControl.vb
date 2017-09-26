@@ -70,10 +70,11 @@ Public Class GameObjectControl
             RaiseEvent NameChange(txtName.Text)
         End If
     End Sub
-
+    Dim imagePath As String
     Private Sub pbImageRenderObject_DragDrop(sender As Object, e As DragEventArgs) Handles pbImageRenderObject.DragDrop
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
         For Each path In files
+            imagePath = path
             pbImageRenderObject.Image = Image.FromFile(path)
         Next
     End Sub
@@ -85,7 +86,11 @@ Public Class GameObjectControl
 
     Private Sub btnAddRenderable_Click(sender As Object, e As EventArgs) Handles btnAddRenderable.Click
         Dim r As New Renderable
-        r.what = New ImageRenderObject(pbImageRenderObject.Image)
+        If imagePath IsNot Nothing Then
+            r.what = New ImageRenderObject(imagePath)
+        Else
+            r.what = New ImageRenderObject(pbImageRenderObject.Image)
+        End If
         r.where = New Vector2(0, 0)
         If Form1.selectedGameObject.renderable Is Nothing Then
             If cbRenderableType.Text = "ImageRenderObject" Then
@@ -199,4 +204,5 @@ Public Class GameObjectControl
         dropNode.EnsureVisible()
         selectedTreeView.SelectedNode = dropNode
     End Sub
+
 End Class

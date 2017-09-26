@@ -46,7 +46,7 @@ Partial Class RenderableControl
         'pbRenderObject
         '
         Me.pbRenderObject.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pbRenderObject.Location = New System.Drawing.Point(3, 53)
+        Me.pbRenderObject.Location = New System.Drawing.Point(3, 55)
         Me.pbRenderObject.Name = "pbRenderObject"
         Me.pbRenderObject.Size = New System.Drawing.Size(192, 192)
         Me.pbRenderObject.TabIndex = 1

@@ -1,4 +1,5 @@
 ﻿
+Imports System.Xml
 Imports Sea_Animation
 
 Public Class LinearMoveAnimation : Inherits Animation
@@ -9,17 +10,8 @@ Public Class LinearMoveAnimation : Inherits Animation
             Return _target
         End Get
         Set(value As Vector2)
-            reverse = False
-            targetReached = False
-            currentPos.X = 0
-            currentPos.Y = 0
-            If value.X = 0 AndAlso value.Y = 0 Then
-                direction.X = 0
-                direction.Y = 0
-            Else
-                direction = Vector2.Normalize(value)
-            End If
             _target = value
+            Recalculate()
         End Set
     End Property
     Private _speed As Double = 0
@@ -28,11 +20,8 @@ Public Class LinearMoveAnimation : Inherits Animation
             Return _speed
         End Get
         Set(value As Double)
-            reverse = False
-            targetReached = False
-            currentPos.X = 0
-            currentPos.Y = 0
             _speed = value
+            Recalculate()
         End Set
     End Property
 
@@ -43,6 +32,26 @@ Public Class LinearMoveAnimation : Inherits Animation
     Private reverse As Boolean = False
     Private currentPos As New Vector2(0, 0)
     Private targetReached As Boolean = False
+
+    Private Sub Recalculate()
+        If _target.X = 0 AndAlso _target.Y = 0 Then
+            direction = New Vector2(0, 0)
+        Else
+            direction = Vector2.Normalize(_target)
+        End If
+        reverse = False
+        currentPos = New Vector2(0, 0)
+        targetReached = False
+    End Sub
+
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(node As XmlNode)
+        Me.Load(node)
+        Recalculate()
+    End Sub
 
     Public Overrides Function GetTransformation() As Matrix3x2
         Dim m As Matrix3x2 = GetChildrenTransformation()
@@ -61,9 +70,8 @@ Public Class LinearMoveAnimation : Inherits Animation
                 currentPos.X = 0
                 currentPos.Y = 0
                 reverse = False
-                If repeat = True Then
-                    _speed *= -1
-                Else
+                direction *= -1
+                If repeat = False Then
                     targetReached = True
                 End If
             End If
@@ -71,7 +79,7 @@ Public Class LinearMoveAnimation : Inherits Animation
             If Vector2.DistanceSquared(New Vector2(0, 0), currentPos) > Vector2.DistanceSquared(New Vector2(0, 0), target) Then
                 currentPos = _target
                 If returnAfterTargetReached = True Then
-                    _speed *= -1
+                    direction *= -1
                     reverse = True
                 ElseIf repeat = True Then
                     currentPos.X = 0
@@ -84,7 +92,64 @@ Public Class LinearMoveAnimation : Inherits Animation
     End Sub
 
     Public Overrides Sub UpdateRenderObject(ByRef renderObject As RenderObject)
-        MyBase.updateRenderObject(renderObject)
+        MyBase.UpdateRenderObject(renderObject)
     End Sub
 
+    Public Overrides Function Save(doc As XmlDocument) As XmlNode
+        Dim n As XmlNode = doc.CreateNode(XmlNodeType.Element, "Animation", "")
+        'id As Attribute
+
+        Dim attribute As XmlAttribute = doc.CreateAttribute("Type")
+        attribute.Value = "LinearMoveAnimation"
+        n.Attributes.Append(attribute)
+
+        attribute = doc.CreateAttribute("id")
+        attribute.Value = Me.id.ToString
+        n.Attributes.Append(attribute)
+
+        attribute = doc.CreateAttribute("TargetX")
+        attribute.Value = _target.X
+        n.Attributes.Append(attribute)
+
+        attribute = doc.CreateAttribute("TargetY")
+        attribute.Value = _target.Y
+        n.Attributes.Append(attribute)
+
+        attribute = doc.CreateAttribute("Speed")
+        attribute.Value = _speed
+        n.Attributes.Append(attribute)
+
+        attribute = doc.CreateAttribute("ReturnAfterTargetReached")
+        attribute.Value = returnAfterTargetReached.ToString
+        n.Attributes.Append(attribute)
+
+        attribute = doc.CreateAttribute("Repeat")
+        attribute.Value = repeat.ToString
+        n.Attributes.Append(attribute)
+
+        For Each child In children
+            n.AppendChild(child.Save(doc))
+        Next
+
+        Return n
+    End Function
+
+    Public Overrides Sub Load(node As XmlNode)
+        For Each attribute As XmlAttribute In node.Attributes
+            If attribute.Name = "id" Then
+                Me.id = Guid.Parse(attribute.Value)
+            ElseIf attribute.Name = "TargetX" Then
+                Me._target.X = attribute.Value
+            ElseIf attribute.Name = "TargetY" Then
+                Me._target.Y = attribute.Value
+            ElseIf attribute.Name = "Speed" Then
+                Me._speed = attribute.Value
+            ElseIf attribute.Name = "ReturnAfterTargetReached" Then
+                Me.returnAfterTargetReached = attribute.Value
+            ElseIf attribute.Name = "Repeat" Then
+                Me.repeat = attribute.Value
+            End If
+        Next
+        LoadChildren(node)
+    End Sub
 End Class

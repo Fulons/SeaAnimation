@@ -1,8 +1,18 @@
-﻿
+﻿Imports System.Xml
+
 Public Class Editor
     Private Sub Editor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CreateGameObjectTree()
         GameObjectControl1.Hide()
+        OpenFileDialog1.InitialDirectory = Form1.resourcePath
+        SaveFileDialog1.InitialDirectory = Form1.resourcePath
+        OpenFileDialog1.Filter = "Xml Files (*.xml)|*.xml"
+        SaveFileDialog1.Filter = "Xml Files (*.xml)|*.xml"
+        OpenFileDialog1.FilterIndex = 1
+        SaveFileDialog1.FilterIndex = 1
+        OpenFileDialog1.RestoreDirectory = True
+        SaveFileDialog1.RestoreDirectory = True
+
         btnAddGameObject.Enabled = False
     End Sub
 
@@ -158,5 +168,28 @@ Public Class Editor
 
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
         Form1.Timer1.Interval = NumericUpDown1.Value
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If SaveFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim doc As New XmlDocument()
+            doc.AppendChild(doc.CreateXmlDeclaration("1.0", "UTF-8", Nothing))
+            Form1.SaveXml(doc)
+            doc.Save(SaveFileDialog1.FileName)
+        End If
+    End Sub
+
+    Private Sub btnLoad_Click(sender As Object, e As EventArgs) Handles btnLoad.Click
+        If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim doc As New XmlDocument()
+            Try
+                doc.Load(OpenFileDialog1.FileName)
+                Form1.LoadXml(doc)
+                CreateGameObjectTree()
+            Catch ex As Exception
+                MessageBox.Show("Cannot read file from disk.... " & ex.Message)
+            End Try
+        End If
+
     End Sub
 End Class

@@ -29,6 +29,10 @@ Partial Class Editor
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.cbRoot = New System.Windows.Forms.CheckBox()
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
+        Me.btnSave = New System.Windows.Forms.Button()
+        Me.btnLoad = New System.Windows.Forms.Button()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -95,12 +99,41 @@ Partial Class Editor
         Me.NumericUpDown1.TabIndex = 9
         Me.NumericUpDown1.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
+        'btnSave
+        '
+        Me.btnSave.Location = New System.Drawing.Point(611, 633)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(75, 23)
+        Me.btnSave.TabIndex = 10
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = True
+        '
+        'btnLoad
+        '
+        Me.btnLoad.Location = New System.Drawing.Point(530, 633)
+        Me.btnLoad.Name = "btnLoad"
+        Me.btnLoad.Size = New System.Drawing.Size(75, 23)
+        Me.btnLoad.TabIndex = 11
+        Me.btnLoad.Text = "Load"
+        Me.btnLoad.UseVisualStyleBackColor = True
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        Me.OpenFileDialog1.InitialDirectory = "/Data"
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.InitialDirectory = "/Data"
+        '
         'Editor
         '
         Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(983, 659)
+        Me.Controls.Add(Me.btnLoad)
+        Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.NumericUpDown1)
         Me.Controls.Add(Me.cbRoot)
         Me.Controls.Add(Me.txtName)
@@ -123,4 +156,8 @@ Partial Class Editor
     Friend WithEvents txtName As TextBox
     Friend WithEvents cbRoot As CheckBox
     Friend WithEvents NumericUpDown1 As NumericUpDown
+    Friend WithEvents btnSave As Button
+    Friend WithEvents btnLoad As Button
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
 End Class

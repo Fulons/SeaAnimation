@@ -84,7 +84,7 @@ Partial Class GameObjectControl
         Me.RenderableControl1.AllowDrop = True
         Me.RenderableControl1.AutoSize = True
         Me.RenderableControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.RenderableControl1.Location = New System.Drawing.Point(204, 0)
+        Me.RenderableControl1.Location = New System.Drawing.Point(206, 0)
         Me.RenderableControl1.Name = "RenderableControl1"
         Me.RenderableControl1.Size = New System.Drawing.Size(355, 275)
         Me.RenderableControl1.TabIndex = 4
@@ -142,7 +142,7 @@ Partial Class GameObjectControl
         Me.Controls.Add(Me.lblName)
         Me.Controls.Add(Me.txtName)
         Me.Name = "GameObjectControl"
-        Me.Size = New System.Drawing.Size(562, 641)
+        Me.Size = New System.Drawing.Size(564, 641)
         CType(Me.pbImageRenderObject, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
