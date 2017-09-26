@@ -49,6 +49,7 @@
         For Each path In files
             If TypeOf Form1.selectedRenderable.what Is ImageRenderObject Then
                 CType(Form1.selectedRenderable.what, ImageRenderObject).img = Image.FromFile(path)
+                CType(Form1.selectedRenderable.what, ImageRenderObject).path = path
                 Me.SetValues(Form1.selectedRenderable)
             End If
         Next
@@ -181,4 +182,5 @@
         dropNode.EnsureVisible()
         selectedTreeView.SelectedNode = dropNode
     End Sub
+
 End Class
