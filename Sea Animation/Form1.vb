@@ -30,6 +30,8 @@ Public Class Form1
 
         Me.Invalidate()
         tick += 1
+        'My.Computer.Audio.Play()
+
     End Sub
 
     'Used by SelectGameObject to search trough and set selectedGameObject recursively 

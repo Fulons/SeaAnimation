@@ -70,6 +70,7 @@ Public Class RotatorAnimation : Inherits Animation
                 direction *= -1
                 currentAngle = initialAngle
                 If repeat = False Then
+                    currentAngle = initialAngle
                     targetReached = True
                 End If
             End If
@@ -82,6 +83,7 @@ Public Class RotatorAnimation : Inherits Animation
                 ElseIf repeat = True Then
                     currentAngle = initialAngle
                 Else
+                    currentAngle = target
                     targetReached = True
                 End If
             End If

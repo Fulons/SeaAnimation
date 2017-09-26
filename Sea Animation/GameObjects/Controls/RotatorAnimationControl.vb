@@ -17,6 +17,7 @@ Public Class RotatorAnimationControl
 
     Private Sub udSpeed_ValueChanged(sender As Object, e As EventArgs) Handles udSpeed.ValueChanged
         CType(Form1.selectedAnimation, RotatorAnimation).speed = udSpeed.Value
+        CType(Form1.selectedAnimation, RotatorAnimation).RestartAnimation()
     End Sub
 
     Private Sub udAngle_ValueChanged(sender As Object, e As EventArgs) Handles udTargetAngle.ValueChanged
@@ -25,22 +26,26 @@ Public Class RotatorAnimationControl
         Else
             CType(Form1.selectedAnimation, RotatorAnimation).target = udTargetAngle.Value
         End If
+        CType(Form1.selectedAnimation, RotatorAnimation).RestartAnimation()
     End Sub
 
     Private Sub udInitialAngle_ValueChanged(sender As Object, e As EventArgs) Handles udInitialAngle.ValueChanged
         If cbDeg.Checked Then
-            CType(Form1.selectedAnimation, RotatorAnimation).initialAngle = udInitialAngle.Value / 360 * (Math.PI * 2)
+            CType(Form1.selectedAnimation, RotatorAnimation).initialAngle = udInitialAngle.Value / 360.0 * (Math.PI * 2)
         Else
             CType(Form1.selectedAnimation, RotatorAnimation).initialAngle = udInitialAngle.Value
         End If
+        CType(Form1.selectedAnimation, RotatorAnimation).RestartAnimation()
     End Sub
 
     Private Sub cbReturn_CheckedChanged(sender As Object, e As EventArgs) Handles cbReturn.CheckedChanged
         CType(Form1.selectedAnimation, RotatorAnimation).returnAfterTargetReached = cbReturn.Checked()
+        CType(Form1.selectedAnimation, RotatorAnimation).RestartAnimation()
     End Sub
 
     Private Sub cbRepeat_CheckedChanged(sender As Object, e As EventArgs) Handles cbRepeat.CheckedChanged
         CType(Form1.selectedAnimation, RotatorAnimation).repeat = cbRepeat.Checked()
+        CType(Form1.selectedAnimation, RotatorAnimation).RestartAnimation()
     End Sub
 #End Region
 
