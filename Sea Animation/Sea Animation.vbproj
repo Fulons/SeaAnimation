@@ -11,7 +11,7 @@
     <AssemblyName>Sea Animation</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="GameObjects\GameObject.vb" />
     <Compile Include="GameObjects\Animations\RotatorAnimation.vb" />
+    <Compile Include="Matrix3x2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -154,6 +155,7 @@
     <Compile Include="GameObjects\Renderable.vb" />
     <Compile Include="GameObjects\RenderObjects\RenderObject.vb" />
     <Compile Include="Sound.vb" />
+    <Compile Include="Vector2.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Editor.resx">
