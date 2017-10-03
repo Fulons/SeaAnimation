@@ -190,7 +190,7 @@ Public Class Editor
                 Form1.LoadXml(doc)
                 CreateGameObjectTree()
             Catch ex As Exception
-                MessageBox.Show("Cannot read file from disk.... " & ex.Message)
+                MessageBox.Show("Cannot read file " + OpenFileDialog1.FileName + " from disk.... " & ex.Message)
             End Try
         End If
     End Sub

@@ -3,7 +3,7 @@
 Public Class Renderable
 #Region "Member variables"
     Public what As RenderObject
-    Public where As Vector2
+    Public where As New Vector2
     Public animation As Animation
     Public id As Guid
 
@@ -39,7 +39,7 @@ Public Class Renderable
 
     'Uses a transform stack to transform the object and its children according to the position of parent and animation transformation
     Public Sub Render(ByRef g As Graphics, ByRef transformStack As Stack(Of Matrix3x2))
-        Dim m As Matrix3x2 = Matrix3x2.Identity
+        Dim m As Matrix3x2 = Matrix3x2.Identity()
         If animation IsNot Nothing Then
             m = animation.GetTransformation()
         End If

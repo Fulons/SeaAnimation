@@ -4,7 +4,7 @@ Public Class GameObject
 #Region "Member variables"
     Public renderable As Renderable
     Public name As String
-    Public pos As Vector2
+    Public pos As New Vector2
 
     Public children As New List(Of GameObject)
 #End Region
